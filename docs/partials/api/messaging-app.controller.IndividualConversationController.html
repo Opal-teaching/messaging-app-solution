@@ -1,0 +1,48 @@
+<h1><code ng:non-bindable="">IndividualConversationController</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">messaging-app</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-page"><p>Manages  ./views/messages/individual-conversation.html</p>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="api/messaging-app.service:MessengerService">MessengerService</a></code>
+</li>
+<li><code ng:non-bindable=""><a href="api/ng.$timeout">$timeout</a></code>
+</li>
+</ul>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_deleteconversation">deleteConversation()</h3>
+<div class="deleteconversation"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-deleteconversation-page"><p>Makes a call to <a href="api/messaging-app.service:MessengerService#deleteconversation">MessengerService</a> to
+delete the current conversation in the page, if this fails, it displays an alert
+otherwise, it pops the current page.</p>
+</div></div>
+</li>
+<li><h3 id="methods_initcontroller">initController()</h3>
+<div class="initcontroller"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-initcontroller-page"><p>Initializes the controller</p>
+</div></div>
+</li>
+<li><h3 id="methods_sendmessage">sendMessage()</h3>
+<div class="sendmessage"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-sendmessage-page"><p>Calls the MessengerService to add a message to the conversation array, updates vm.conversations
+after.</p>
+</div></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_conversation">conversation</h3>
+<div class="conversation"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-conversation-page"><p>Contains the current conversation in the page.</p>
+</div></div>
+</li>
+<li><h3 id="properties_messagecontent">messageContent</h3>
+<div class="messagecontent"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-messagecontent-page"><p>Contains the new message contents</p>
+</div></div>
+</li>
+<li><h3 id="properties_nomessages">noMessages</h3>
+<div class="nomessages"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-nomessages-page"><p>Flag to display &quot;No messages&quot; in case of an empty conversation</p>
+</div></div>
+</li>
+</ul>
+</div>
+</div>

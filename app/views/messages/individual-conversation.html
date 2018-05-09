@@ -1,0 +1,50 @@
+<ons-page ng-controller="IndividualConversationController as vm">
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="navi.popPage()">
+                <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">
+            {{vm.conversation.user_1}}
+        </div>
+        <div class="right">
+            <ons-toolbar-button>
+                <ons-icon icon="ion-trash-a" fixed-width="false" style="font-size: 26px; vertical-align: -4px;"
+                          ng-click="vm.deleteConversation()"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    <ons-list style="margin-top:10px;height:100px">
+        <ons-list-item>
+            <input type="text" class="text-input text-input--transparent"
+                   placeholder="Enter message..." style="width: 100%" ng-model="vm.messageContent">
+        </ons-list-item>
+    </ons-list>
+    <br>
+    <ons-button ng-click="vm.sendMessage()" ng-disabled="!vm.messageContent" modifier="large">Send Message</ons-button>
+    <br>
+
+    <div class="center" style="text-align: center" ng-if="vm.noMessages">
+        <p class="msg-app-conversations-empty"> No messages!</p>
+        <!--<svg class="progress-circular">-->
+        <!--<circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="10"/>-->
+        <!--</svg>-->
+    </div>
+    <ons-list class="timeline" ng-show="!vm.noMessages">
+        <ons-list-item class="timeline-li" ng-repeat="message in vm.conversation.messages">
+            <ons-row>
+
+                <ons-col>
+                    <div class="timeline-date">{{message.messageDate|date: 'MMM d, y h:mm a'}}</div>
+                    <div class="timeline-from">
+                        <span class="timeline-name">{{message.from}}</span>
+                    </div>
+                    <div class="timeline-message">
+                        {{message.messageContent}}
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-list>
+</ons-page>

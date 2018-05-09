@@ -1,0 +1,29 @@
+{
+  "name": "day1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install",
+    "test": "karma start karma.conf.js",
+    "server": "http-server ./app -p 8080 -o"
+  },
+  "keywords": [
+    "front-end",
+    "opal",
+    "teaching",
+    "messaging"
+  ],
+  "author": "David Herrera",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.8.4",
+    "gulp": "^3.9.1",
+    "gulp-ngdocs": "^0.3.0",
+    "jasmine-core": "^3.1.0",
+    "karma": "^2.0.2",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-junit-reporter": "^1.2.0"
+  }
+}

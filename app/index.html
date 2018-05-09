@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="lib/bower_components/OnsenUI/css/onsen-css-components.css">
+    <link rel="stylesheet" href="lib/bower_components/OnsenUI/css/onsenui.css">
+    <link rel="stylesheet" href="./views/messages/conversations.css">
+    <script src="lib/bower_components/angular/angular.min.js" type="application/javascript"></script>
+    <script src="lib/bower_components/OnsenUI/js/onsenui.min.js" type="application/javascript"></script>
+</head>
+<body ng-app="messaging-app">
+    <ons-navigator var="navi" page="./views/messages/conversations.html"></ons-navigator>
+    <script src="js/app.js" type="application/javascript"></script>
+
+    <!--controllers-->
+    <script src="js/controllers/messenger/conversationsController.js"></script>
+    <script src="js/controllers/messenger/individualConversationController.js"></script>
+    <script src="js/controllers/messenger/newConversationController.js"></script>
+
+    <!--services-->
+    <script src="js/services/messenger/messengerService.js"></script>
+    <script src="js/services/auth/userService.js"></script>
+
+</body>
+
+</html>
+

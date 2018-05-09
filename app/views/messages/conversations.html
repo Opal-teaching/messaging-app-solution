@@ -1,0 +1,49 @@
+<ons-page ng-controller="ConversationsController as vm">
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button modifier="outline" ng-click="vm.newConversation()" >
+                <ons-icon icon="ion-compose" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">
+            Conversations
+        </div>
+        <div class="right">
+            <ons-toolbar-button>
+                <ons-icon icon="ion-ios-search-strong" fixed-width="false" style="font-size: 26px; vertical-align: -4px;"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-item style="margin-top:10px">
+            <input type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchConversationString">
+
+        </ons-list-item>
+    </ons-list>
+    <div class="center" style="text-align: center" ng-if="vm.emptyConversations">
+        <p class="msg-app-conversations-empty">No conversations!</p>
+    </div>
+    <ons-list class="timeline" modifier="inset" ng-show="!vm.emptyConversations">
+        <ons-list-item class="timeline-li" modifier="tappable"
+                       ng-repeat="conversation in vm.conversations | filter: vm.searchConversationString"
+                       ng-click="vm.goToConversation(conversation)">
+            <ons-row>
+                <ons-col width="50px">
+                    <img ng-src="{{conversation.imageUrl}}" class="timeline-image">
+                </ons-col>
+
+                <ons-col>
+                    <div class="timeline-date">{{conversation.lastMessage.messageDate|date: 'MMM d, y h:mm:ss a'}}</div>
+                    <div class="timeline-from">
+                        <span class="timeline-name">{{conversation.user_1}}</span>
+                    </div>
+
+                    <div class="timeline-message">
+                        <p ng-show="conversation.lastMessage">{{conversation.lastMessage.messageContent}}</p>
+                        <p ng-show="!conversation.lastMessage" class="msg-app-conversations-empty"> Empty Conversation</p>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-list>
+</ons-page>

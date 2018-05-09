@@ -1,0 +1,39 @@
+<ons-page ng-controller="NewConversationController as vm">
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="navi.popPage()" >
+                Close
+                <!--<ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>-->
+            </ons-toolbar-button>
+        </div>
+        <div class="center">
+            Timeline
+        </div>
+        <div class="right">
+            <ons-toolbar-button>
+                <ons-icon icon="ion-ios-search-strong" fixed-width="false" style="font-size: 26px; vertical-align: -4px;"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    <div class="msg-app-new-conversation-login-form">
+
+        <input type="text" class="msg-app-new-conversation-text-input--underbar" placeholder="name" value=""
+               ng-model="vm.name">
+        <input type="text" class="msg-app-new-conversation-text-input--underbar" placeholder="Image Url" value=""
+            ng-model="vm.imageUrl">
+        <br>
+        <div ng-show="vm.name">
+           <p> Name: {{vm.name}}</p>
+        </div>
+        <div ng-show="vm.imageUrl" >
+            <p> Image:</p>
+            <img ng-src="{{vm.imageUrl}}" alt="" class="msg-app-new-conversation-image">
+        </div>
+
+        <br><br>
+        <ons-button modifier="large" class="msg-app-new-conversation-login-button" ng-click="vm.createConversation()"
+                    ng-disabled="vm.checkFields()">
+            Create Conversation
+        </ons-button>
+    </div>
+</ons-page>

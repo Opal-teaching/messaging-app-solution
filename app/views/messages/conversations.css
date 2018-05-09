@@ -1,0 +1,307 @@
+
+/* Conversations*/
+.msg-app-conversations-empty{
+    color: lightgray;
+}
+.reply-notification {
+    position: absolute;
+    top: 28px;
+    font-size: 10px;
+    font-weight: 600;
+    height: 13px;
+    line-height: 13px;
+    padding: 0 4px;
+    min-width: 13px;
+    margin-left: 18px;
+}
+
+.tab-icon {
+    font-size: 28px;
+    vertical-align: -4px;
+}
+
+.timeline {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.timeline-li {
+    line-height: 1;
+    padding: 10px;
+}
+
+.timeline-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+}
+
+.timeline-date {
+    float: right;
+    font-size: 12px;
+    opacity: 0.35;
+    margin-top: 3px;
+}
+
+.timeline-from {
+    margin: 0px 0 6px 0;
+}
+
+.timeline-name {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.timeline-id {
+    font-size: 14px;
+    opacity: 0.4;
+}
+
+.timeline-message {
+    margin-top: 4px;
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.15;
+}
+
+.progress-circular {
+    -webkit-animation: progress__rotate 2s linear infinite;
+    -moz-animation: progress__rotate 2s linear infinite;
+    -o-animation: progress__rotate 2s linear infinite;
+    animation: progress__rotate 2s linear infinite;
+    height: 80px;
+    position: relative;
+    width: 80px;
+}
+.progress-circular__primary {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    -webkit-animation: progress__dash 1.5s ease-in-out infinite;
+    -moz-animation: progress__dash 1.5s ease-in-out infinite;
+    -o-animation: progress__dash 1.5s ease-in-out infinite;
+    animation: progress__dash 1.5s ease-in-out infinite;
+    stroke: #009688;
+    -webkit-transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    -moz-transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    -o-transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.progress-circular--determinate {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+    -webkit-animation: none;
+    -moz-animation: none;
+    -o-animation: none;
+    animation: none;
+}
+.progress-circular--determinate > .progress-circular__primary {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -o-animation: none;
+    animation: none;
+}
+.progress-circular--determinate > .progress-circular__secondary {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -o-animation: none;
+    animation: none;
+    stroke: #80cbc4;
+}
+@-moz-keyframes progress__rotate {
+    100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes progress__rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-o-keyframes progress__rotate {
+    100% {
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes progress__rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-moz-keyframes progress__dash {
+    0% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: 0%;
+    }
+    50% {
+        stroke-dasharray: 201%, 50.322%;
+        stroke-dashoffset: -100%;
+    }
+    100% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: -251.32%;
+    }
+}
+@-webkit-keyframes progress__dash {
+    0% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: 0%;
+    }
+    50% {
+        stroke-dasharray: 201%, 50.322%;
+        stroke-dashoffset: -100%;
+    }
+    100% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: -251.32%;
+    }
+}
+@-o-keyframes progress__dash {
+    0% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: 0%;
+    }
+    50% {
+        stroke-dasharray: 201%, 50.322%;
+        stroke-dashoffset: -100%;
+    }
+    100% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: -251.32%;
+    }
+}
+@keyframes progress__dash {
+    0% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: 0%;
+    }
+    50% {
+        stroke-dasharray: 201%, 50.322%;
+        stroke-dashoffset: -100%;
+    }
+    100% {
+        stroke-dasharray: 10%, 241.32%;
+        stroke-dashoffset: -251.32%;
+    }
+}
+/** Search conversations*/
+
+input[type="search"].msg-app-conversations-search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    display: none;
+}
+.msg-app-conversations-search-input {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    line-height: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    vertical-align: top;
+    outline: none;
+    line-height: 1;
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 17px;
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 31px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #1f1f21;
+    padding: 4px 0 0 28px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nNDFweCcgaGVpZ2h0PSc0MHB4JyB2aWV3Qm94PScwIDAgNDEgNDAnIHZlcnNpb249JzEuMScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB4bWxuczp4bGluaz0naHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluaycgeG1sbnM6c2tldGNoPSdodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMnPjx0aXRsZT5TbGljZSAxPC90aXRsZT48ZGVzY3JpcHRpb24+Q3JlYXRlZCB3aXRoIFNrZXRjaCAoaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoKTwvZGVzY3JpcHRpb24+PGRlZnM+PC9kZWZzPjxnIGlkPSdQYWdlIDEnIHN0cm9rZT0nbm9uZScgc3Ryb2tlLXdpZHRoPScxJyBmaWxsPSdub25lJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnPjxnIGlkPSdzZWFyY2gnIGZpbGw9JyNDNkM4QzgnPjxwYXRoIGQ9J00wLjUwNCwxNi4zMzggQzAuNTA0LDI1LjA4NSA3LjYzNSwzMi4xNjUgMTYuNDQ0LDMyLjE2NSBDMjUuMjQsMzIuMTY1IDMyLjM4MiwyNS4wODUgMzIuMzgyLDE2LjMzOCBDMzIuMzgyLDcuNTkxIDI1LjI0LDAuNSAxNi40NDQsMC41IEM3LjYzNSwwLjUgMC41MDQsNy41OTEgMC41MDQsMTYuMzM4IEwwLjUwNCwxNi4zMzggWiBNNS41NTUsMTYuMzM4IEM1LjU1NSwxMC4zNTkgMTAuNDIzLDUuNTIxIDE2LjQ0NSw1LjUyMSBDMjIuNDU1LDUuNTIxIDI3LjMzMywxMC4zNiAyNy4zMzMsMTYuMzM4IEMyNy4zMzMsMjIuMzE3IDIyLjQ1NSwyNy4xNTYgMTYuNDQ1LDI3LjE1NiBDMTAuNDIzLDI3LjE1NiA1LjU1NSwyMi4zMTYgNS41NTUsMTYuMzM4IEw1LjU1NSwxNi4zMzggWiBNMjcuNjY2LDMwLjg2MSBMMzQuNTIxLDM4LjY3IEMzNS42MjUsMzkuNzcyIDM2LjMzOCwzOS43ODEgMzcuNDYsMzguNjcgTDM5LjY2MSwzNi40ODkgQzQwLjc0MywzNS40MDggNDAuODExLDM0LjcxMSAzOS42NjEsMzMuNTY4IEwzMS43NjUsMjYuNzkzIEwyNy42NjYsMzAuODYxIEwyNy42NjYsMzAuODYxIFogTTI3LjY2NiwzMC44NjEnIGlkPSdTaGFwZSc+PC9wYXRoPjwvZz48L2c+PC9zdmc+");
+    background-position: 8px center;
+    background-repeat: no-repeat;
+    -webkit-background-size: 17px;
+    background-size: 17px;
+    font-weight: 400;
+    display: block;
+    width: 100%;
+}
+.msg-app-conversations-search-input:focus {
+    background-color: #f9f9f9;
+    color: #1f1f21;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.msg-app-conversations-search-input::-webkit-search-cancel-button,
+.msg-app-conversations-search-input::-webkit-search-decoration {
+    margin-right: 0px;
+}
+.msg-app-conversations-search-input::-webkit-input-placeholder {
+    color: #999;
+}
+.msg-app-conversations-search-input::-moz-placeholder {
+    color: #999;
+}
+.msg-app-conversations-search-input::-ms-input-placeholder {
+    color: #999;
+}
+.msg-app-conversations-search-input:-ms-input-placeholder {
+    color: #999;
+}
+.msg-app-conversations-search-input:disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+}
+/* Create Conversations*/
+
+.msg-app-new-conversation-login-form {
+    text-align: center;
+    width: 80%;
+    margin: 60px auto 0;
+}
+
+.msg-app-new-conversation-input[type=text], input[type=text] {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    outline: none;
+    height: 100%;
+    padding-top: 15px;
+    padding-bottom: 16px;
+}
+
+.msg-app-login-button {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.msg-app-forgot-password {
+    display: block;
+    margin: 8px auto 0 auto;
+    font-size: 14px;
+}
+.msg-app-new-conversation-image {
+    width:80vw;
+    max-width:500px;
+    heigth:auto;
+}
+
+/**/

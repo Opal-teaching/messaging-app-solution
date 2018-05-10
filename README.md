@@ -19,7 +19,10 @@ Things to note:
    		.pipe(gulp.dest('./docs'));
    });
    ```
-
+   - __How do I run documentation?__
+    ```
+    gulp docs
+    ```
    - __How do I check the documentation?__
    Navigate to the `docs` folder and start a server there
    using `http-server`

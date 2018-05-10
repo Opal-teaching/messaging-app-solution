@@ -50,8 +50,12 @@
 	     * @description Initializes the controller and the scope variables
 	     */
         function initController(){
+
 	        vm.conversations = MessengerService.getConversations();
-	        vm.emptyConversations = (vm.conversations.length === 0);
+			vm.conversations = vm.conversations.sort(function(conv1,conv2){
+				return conv1.lastMessage.messageDate > conv2.lastMessage.messageDate;
+			});
+		    vm.emptyConversations = (vm.conversations.length === 0);
 
 	        // Initialize events
             initializeEvents();
@@ -85,9 +89,12 @@
 	     * @description Initializes navigator event to refresh conversations
 	     */
         function initializeEvents() {
-	        navi.on("postpop",function(event){
+	        navi.on("prepop",function(event){
 	            $timeout(function(){
 		            vm.conversations = MessengerService.getConversations();
+		            vm.conversations = vm.conversations.sort(function(conv1,conv2){
+			            return new Date(conv1.lastMessage.messageDate) < new Date(conv2.lastMessage.messageDate);
+		            });
 		            vm.emptyConversations = (vm.conversations.length === 0);
                 });
 	        });
@@ -101,7 +108,5 @@
         $scope.$on('$destroy', function() {
 		    navi.off("postpop");
 	    });
-
-
     }
 })();

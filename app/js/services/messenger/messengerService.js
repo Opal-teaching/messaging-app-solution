@@ -46,11 +46,11 @@
 		    {
 			    "id":"1",
 			    "imageUrl":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg",
-		        "lastMessage": {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"David Herrera"},
+		        "lastMessage": {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"John Kildea"},
 	            "user_1": "John Kildea",
 			    "user_2": "David Herrera",
 			    "messages":[ {"messageContent":"Hello!","messageDate":"May 7, 2018 9:01 am","messageId":"0","from":"John Kildea"},
-				    {"messageContent":"Hey John","messageDate":"May 7, 2018 9:02 am","messageId":"1","from":"John Kildea"},
+				    {"messageContent":"Hey John","messageDate":"May 7, 2018 9:02 am","messageId":"1","from":"David Herrera"},
 				    {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"John Kildea"}]
 		    },
 		    {
@@ -135,9 +135,16 @@
             var message = {
 	            "messageContent":messageContent,"messageDate":new Date(),"messageId":msg_id,"from":UserService.getUser()
             };
-	        conversations[conversationId].lastMessage = message;
-			conversations[conversationId].messages.push(message);
-			return 1;
+            var searchConv = conversations.filter(function(item){
+            	return item.id === conversationId;
+            });
+
+			if(searchConv.length !== 1) {
+				return false;
+			}
+		    searchConv[0].lastMessage = message;
+		    searchConv[0].messages.push(message);
+			return true;
         }
 	    /**
 	     * @ngdoc method

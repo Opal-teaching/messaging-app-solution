@@ -9,9 +9,6 @@
             Conversations
         </div>
         <div class="right">
-            <ons-toolbar-button>
-                <ons-icon icon="ion-ios-search-strong" fixed-width="false" style="font-size: 26px; vertical-align: -4px;"></ons-icon>
-            </ons-toolbar-button>
         </div>
     </ons-toolbar>
     <ons-list>
@@ -33,13 +30,15 @@
                 </ons-col>
 
                 <ons-col>
-                    <div class="timeline-date">{{conversation.lastMessage.messageDate|date: 'MMM d, y h:mm:ss a'}}</div>
+                    <div class="timeline-date">{{conversation.lastMessage.messageDate|date: 'MMM d, y h:mm a'}}</div>
                     <div class="timeline-from">
                         <span class="timeline-name">{{conversation.user_1}}</span>
                     </div>
 
                     <div class="timeline-message">
-                        <p ng-show="conversation.lastMessage">{{conversation.lastMessage.messageContent}}</p>
+
+                        <p ng-show="conversation.lastMessage" style="color:grey">
+                            {{conversation.lastMessage.from}}: {{conversation.lastMessage.messageContent}}</p>
                         <p ng-show="!conversation.lastMessage" class="msg-app-conversations-empty"> Empty Conversation</p>
                     </div>
                 </ons-col>

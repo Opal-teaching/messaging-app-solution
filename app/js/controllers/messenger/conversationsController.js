@@ -10,8 +10,8 @@
 	 */
     module.controller('ConversationsController', ConversationsController);
 
-    ConversationsController.$inject = ["MessengerService","$timeout", "$scope"];
-    function ConversationsController(MessengerService,$timeout, $scope){
+    ConversationsController.$inject = ["MessengerService","$timeout", "$scope", "UserService"];
+    function ConversationsController(MessengerService,$timeout, $scope, UserService){
         var vm = this;
 	    /**
 	     * @ngdoc property
@@ -37,6 +37,8 @@
 
 	    vm.newConversation = newConversation;
         vm.goToConversation = goToConversation;
+		vm.logout = logout;
+
 
         initController();
 
@@ -51,11 +53,11 @@
 	     */
         function initController(){
 
-	        vm.conversations = MessengerService.getConversations();
-			vm.conversations = vm.conversations.sort(function(conv1,conv2){
-				return conv1.lastMessage.messageDate > conv2.lastMessage.messageDate;
-			});
-		    vm.emptyConversations = (vm.conversations.length === 0);
+	        // vm.conversations = MessengerService.getConversations();
+			// vm.conversations = vm.conversations.sort(function(conv1,conv2){
+			// 	return conv1.lastMessage.messageDate > conv2.lastMessage.messageDate;
+			// });
+			vm.emptyConversations = (vm.conversations.length === 0);
 
 	        // Initialize events
             initializeEvents();
@@ -90,15 +92,26 @@
 	     */
         function initializeEvents() {
 	        navi.on("prepop",function(event){
-	            $timeout(function(){
-		            vm.conversations = MessengerService.getConversations();
-		            vm.conversations = vm.conversations.sort(function(conv1,conv2){
-			            return new Date(conv1.lastMessage.messageDate) < new Date(conv2.lastMessage.messageDate);
-		            });
-		            vm.emptyConversations = (vm.conversations.length === 0);
-                });
+                // $timeout(function(){
+		         //    vm.conversations = MessengerService.getConversations();
+		         //    vm.conversations = vm.conversations.sort(function(conv1,conv2){
+			     //        return new Date(conv1.lastMessage.messageDate) < new Date(conv2.lastMessage.messageDate);
+		         //    });
+		         //    vm.emptyConversations = (vm.conversations.length === 0);
+                // });
 	        });
         }
+        /**
+        * @ngdoc method
+        * @name module_name.type_angular:name_type#method_name
+        * @methodOf module_name.type_angular:name_type
+        * @param {*} param1 Desc param1
+        * @returns {} Desc return
+        * @desc metho_descrition
+        **/
+        function logout(){
+        	UserService.logout();
+		}
 	    /**
 	     * @ngdoc event
 	     * @name messaging-app.controller:ConversationsController#$destroy

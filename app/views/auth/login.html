@@ -1,0 +1,40 @@
+<ons-page ng-controller="LoginController as vm">
+    <ons-toolbar>
+        <div class="center">
+            Login
+        </div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <ons-row  align="center" style="margin-top: 20px">
+        <ons-col  style="text-align:center">
+            <img class="center-image image-border" src="./resources/images/lion-messaging.png">
+        </ons-col>
+
+    </ons-row>
+    <div style="margin-top: 20px;">
+        <ons-list-header>E-mail</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input type="text" class="text-input--underbar" ng-model = "vm.email" placeholder="Enter Email">
+
+            </ons-col>
+        </ons-row>
+        <ons-list-header>Password</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input type="password" class="text-input--underbar" ng-model = "vm.password" placeholder="Enter Password">
+            </ons-col>
+        </ons-row>
+        <br>
+        <ons-button ng-click="vm.login(vm.email,vm.password)" modifier="large">Login</ons-button>
+
+    </div>
+    <br>
+    <br>
+    <div style="text-align:center">
+        <ons-button ng-click="navi.pushPage('./views/auth/register-user.html')" modifier="quiet">Create Account</ons-button>
+
+    </div>
+
+</ons-page>

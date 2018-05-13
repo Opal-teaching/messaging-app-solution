@@ -48,6 +48,7 @@
 }
 
 .timeline-name {
+    margin-top: 10px;
     font-size: 15px;
     font-weight: 500;
 }
@@ -278,7 +279,7 @@ input[type="search"].msg-app-conversations-search-input::-webkit-search-cancel-b
     margin: 60px auto 0;
 }
 
-.msg-app-new-conversation-input[type=text], input[type=text] {
+.msg-app-new-conversation-input[type=text] {
     display: block;
     width: 100%;
     margin: 0 auto;

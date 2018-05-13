@@ -19,7 +19,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "messaging-app",
       "shortDescription": "Manages  ./views/messages/conversations.html",
-      "keywords": "$scope $timeout animation api array controller conversation conversations conversationscontroller determine emptyconversations event flag gotoconversation html initcontroller initializeevents initializes lift manages message messaging-app messengerservice method navigator new-conversation newconversation parameter property pushes refresh scope selected service stack variables"
+      "keywords": "$scope $timeout animation api array controller conversation conversations conversationscontroller determine emptyconversations event flag gotoconversation html initcontroller initializeevents initializes lift manages matches message messaging-app messengerservice method names navigator new-conversation newconversation parameter property pushes refresh scope search searchconversationstring selected service stack string variables"
     },
     {
       "section": "api",
@@ -38,6 +38,15 @@ NG_DOCS={
       "moduleName": "messaging-app",
       "shortDescription": "Manages  ./views/messages/new-conversation.html",
       "keywords": "$scope $timeout add addconversation api button calls checkfields checks controller conversation createconversation fields html imageurl manages messaging-app messengerservice method newconversationcontroller ngdisabled person property service submit url user"
+    },
+    {
+      "section": "api",
+      "id": "messaging-app.filter:ellipsis",
+      "shortName": "ellipsis",
+      "type": "filter",
+      "moduleName": "messaging-app",
+      "shortDescription": "If the text is larger than maxLength,",
+      "keywords": "api apply ellipsis filter function larger length maximum maxlength messaging-app processed returns shortened text transformation"
     },
     {
       "section": "api",

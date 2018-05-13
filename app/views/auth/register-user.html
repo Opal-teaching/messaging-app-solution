@@ -1,0 +1,65 @@
+<ons-page ng-controller="RegistrationController as vm">
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button  ng-click="navi.popPage()" >
+                <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">
+            Register
+        </div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <div>
+
+        <ons-list-header>First Name</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input  class="text-input--underbar" placeholder="Enter First Name" ng-model="vm.firstname">
+            </ons-col>
+        </ons-row>
+        <ons-list-header>Last Name</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input  class="text-input--underbar" placeholder="Enter Last Name" ng-model="vm.lastname">
+            </ons-col>
+        </ons-row>
+        <ons-list-header>Username</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input  class="text-input--underbar" placeholder="Enter Username" ng-model="vm.username">
+            </ons-col>
+        </ons-row>
+        <ons-list-header>E-mail</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input type="email" class="text-input--underbar" placeholder="Enter Email" ng-model="vm.email">
+
+            </ons-col>
+        </ons-row>
+        <ons-list-header>Password</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input type="password" class="text-input--underbar" placeholder="Enter Password" ng-model="vm.password">
+            </ons-col>
+        </ons-row>
+        <ons-list-header>Image</ons-list-header>
+        <ons-row>
+            <ons-col>
+                <input class="text-input--underbar" placeholder="Enter Image Url" ng-model="vm.imageUrl">
+            </ons-col>
+        </ons-row>
+        <ons-row align="center" style="height:60px">
+            <ons-col>
+                <div style="text-align: center;margin-top: 10px">
+                    <img ng-src="{{vm.imageUrl}}" alt="" style="width:auto;height: 60px">
+                </div>
+            </ons-col>
+        </ons-row>
+
+        <br>
+        <ons-button ng-click="vm.registerUser(vm.username,vm.email,vm.password, vm.firstname, vm.lastname, vm.imageUrl)" modifier="large">Register</ons-button>
+
+    </div>
+</ons-page>

@@ -18,6 +18,7 @@
 	     * @type {Array}
 	     */
         var conversations = [];
+        var refConversations = firebase.database().ref("conversations");
 	    /**
 	     *
 	     * @type {{addConversation: addConversation, getConversations: getConversations, getConversationMessages: getConversationMessages, getConversationsFromServer: getConversationsFromServer}}
@@ -31,40 +32,6 @@
         };
 
 
-		    // Initialize conversations with dummy data;;
-	    conversations = [
-		    {
-			    "id":"0",
-			    "imageUrl":"https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&h=350",
-			    "lastMessage":{"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"3","from":"Laurie Hendren"},
-			    "user_1":"Laurie Hendren",
-			    "user_2":"David Herrera",
-			    "messages":[{"messageContent":"Hello!","messageDate":"May 7, 2018 9:01 am","messageId":"1","from":"Laurie Hendren"},
-				    {"messageContent":"Hey Laurie","messageDate":"May 7, 2018 9:02 am","messageId":"2","from":"David H"},
-				    {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"3","from":"Laurie Hendren"}]
-		    },
-		    {
-			    "id":"1",
-			    "imageUrl":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg",
-		        "lastMessage": {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"John Kildea"},
-	            "user_1": "John Kildea",
-			    "user_2": "David Herrera",
-			    "messages":[ {"messageContent":"Hello!","messageDate":"May 7, 2018 9:01 am","messageId":"0","from":"John Kildea"},
-				    {"messageContent":"Hey John","messageDate":"May 7, 2018 9:02 am","messageId":"1","from":"David Herrera"},
-				    {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"John Kildea"}]
-		    },
-		    {
-			    "id":"2",
-			    "imageUrl":"https://images.pexels.com/photos/126407/pexels-photo-126407.jpeg?auto=compress&cs=tinysrgb&h=350",
-			    "lastMessage":{"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"Tarek Hijal"},
-			    "user_1":"Tarek Hijal",
-			    "user_2":"David Herrera",
-			    "messages":[ {"messageContent":"Hello!","messageDate":"May 7, 2018 9:01 am","messageId":"0","from":"Tarek Hijal"},
-				    {"messageContent":"Hey Tarek","messageDate":"May 7, 2018 9:02 am","messageId":"1","from":"David Herrera"},
-				    {"messageContent":"Welcome to Opal!","messageDate":"May 7, 2018 9:03 am","messageId":"2","from":"Tarek Hijal"}]
-		    }
-	    ];
-
         return service;
 
 
@@ -76,24 +43,24 @@
 	     * @name messaging-app.service:MessengerService#addConversation
 	     * @methodOf messaging-app.service:MessengerService
   	     * @description Takes a name and an imageUrl, and adds a new conversation onto the conversations array.
-	     * @param {string} name Name of person in the conversation
-	     * @param {string} imageUrl Url of image
+	     * @param {string} convId ConversationId
+		 * @param {string} user_conv User to start a conversation with
+		 * @returns {Promise} Returns promise.
 	     */
-        function addConversation(name, imageUrl){
-            if(typeof name === "string" && name.length> 0
-	            && typeof imageUrl === "string" && imageUrl.length> 0)
-            var id = conversations.length;
-            var newConversation = {
-				id: id,
-	            user_1: name,
-	            user_2: UserService.getUser(),
-	            imageUrl: imageUrl,
-	            lastMessage: null,
-	            messageDate: null,
-	            messages: []
-            };
+        function addConversation(convId, user_conv){
+            let members = {};
+            members[user_conv.userId] = true;
+            members[UserService.getUser().userId] = true;
 
-            conversations.push(newConversation);
+            let newConversation = {};
+            newConversation[convId] = {
+				convId: convId,
+				members: members
+            };
+			return refConversations.update(newConversation)
+				.then(()=>{
+					return newConversation;
+				});
         }
 	    /**
 	     * @ngdoc method
@@ -103,7 +70,16 @@
 	     * @returns {Array} conversations array.
 	     */
         function getConversations() {
-        	return conversations;
+        	var deferred = $q.defer();
+		    refDB.once("value",function(snap){
+				if(snap.exists())
+				{
+					deferred.resolve(snap.val());
+				}
+		    }).catch(function(err){
+				deferred.reject(err);
+		    });
+		    return deferred.promise;
 	    }
 	    /**
 	     * @ngdoc method
@@ -115,10 +91,17 @@
 	     */
 	    function getConversationById(id)
 	    {
-	    	var results =  conversations.filter(function(conv){return conv.id === id});
-	    	if(results.length !== 1) return null;
-
-	    	return results[0];
+		    var deferred = $q.defer();
+		    if(typeof id === "undefined") deferred.reject("Invalid Parameter");
+		    refDB.child(id).once("value",function(snap){
+			    if(snap.exists())
+			    {
+				    deferred.resolve(snap.val());
+			    }
+		    }).catch(function(err){
+			    deferred.reject(err);
+		    });
+		    return deferred.promise;
 	    }
 
 	    /**
@@ -130,11 +113,14 @@
 	     * @description Adds a message to a conversation.
 	     */
         function sendMessage(conversationId, messageContent) {
+		    var deferred = $q.defer();
+		    return deferred.promise;
             var messageDate = new Date();
             var msg_id = conversations[conversationId].messages.length;
             var message = {
 	            "messageContent":messageContent,"messageDate":new Date(),"messageId":msg_id,"from":UserService.getUser()
             };
+
             var searchConv = conversations.filter(function(item){
             	return item.id === conversationId;
             });
@@ -142,8 +128,10 @@
 			if(searchConv.length !== 1) {
 				return false;
 			}
-		    searchConv[0].lastMessage = message;
-		    searchConv[0].messages.push(message);
+		    refDB.child(conversationId+"/messages").push().catch(function(err){
+			    deferred.reject(err);
+		    });
+
 			return true;
         }
 	    /**

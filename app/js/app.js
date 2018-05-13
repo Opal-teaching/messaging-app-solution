@@ -6,8 +6,6 @@
 	 * @requires onsen
 	 * @type {module|angular.Module}
 	 */
-    var module = angular.module("messaging-app",["onsen"]);
-
+    angular.module("messaging-app",["onsen"]);
 
 })();
-

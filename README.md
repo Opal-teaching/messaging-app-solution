@@ -10,7 +10,7 @@ Things to note:
    important in your software development. Check the `gulpfile.js` file
     I created one
    task in particular.  This task simply grabs the files that match `./app/js/**/*.js`,
-  and passes them through the ngdocs package, finally
+  and passes them through the `ngdocs` package, finally
   I save my documentation in the `./docs` folder.
    ```
    gulp.task("docs",function(){

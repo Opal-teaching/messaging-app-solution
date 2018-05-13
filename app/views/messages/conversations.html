@@ -9,6 +9,9 @@
             Conversations
         </div>
         <div class="right">
+            <ons-toolbar-button  ng-click="vm.logout()" >
+                <ons-icon icon="ion-log-out" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+            </ons-toolbar-button>
         </div>
     </ons-toolbar>
     <ons-list>
@@ -22,8 +25,10 @@
     </div>
     <ons-list class="timeline" modifier="inset" ng-show="!vm.emptyConversations">
         <ons-list-item class="timeline-li" modifier="tappable"
-                       ng-repeat="conversation in vm.conversations | filter: vm.searchConversationString"
+                       ng-repeat="conversation in vm.conversations | filterObject: vm.searchConversationString"
                        ng-click="vm.goToConversation(conversation)">
+
+
             <ons-row>
                 <ons-col width="50px">
                     <img ng-src="{{conversation.imageUrl}}" class="timeline-image">

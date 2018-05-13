@@ -1,0 +1,48 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/usr/lib/node_modules/npm/bin/npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'server',
+1 verbose cli   '--scripts-prepend-node-path=auto' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.0
+4 verbose run-script [ 'preserver', 'server', 'postserver' ]
+5 info lifecycle day1@1.0.0~preserver: day1@1.0.0
+6 silly lifecycle day1@1.0.0~preserver: no script for preserver, continuing
+7 info lifecycle day1@1.0.0~server: day1@1.0.0
+8 verbose lifecycle day1@1.0.0~server: unsafe-perm in lifecycle true
+9 verbose lifecycle day1@1.0.0~server: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/home/sable/dherre3/public_html/messaging-app-solution/node_modules/.bin:/var/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/opt/puppetlabs/bin
+10 verbose lifecycle day1@1.0.0~server: CWD: /home/sable/dherre3/public_html/messaging-app-solution
+11 silly lifecycle day1@1.0.0~server: Args: [ '-c', 'http-server ./app -p 8080 -o' ]
+12 info lifecycle day1@1.0.0~server: Failed to exec server script
+13 verbose stack Error: day1@1.0.0 server: `http-server ./app -p 8080 -o`
+13 verbose stack spawn ENOENT
+13 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:33:16)
+13 verbose stack     at emitTwo (events.js:106:13)
+13 verbose stack     at ChildProcess.emit (events.js:191:7)
+13 verbose stack     at maybeClose (internal/child_process.js:891:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+14 verbose pkgid day1@1.0.0
+15 verbose cwd /home/sable/dherre3/public_html/messaging-app-solution
+16 error Linux 4.4.0-79-generic
+17 error argv "/usr/bin/nodejs" "/usr/lib/node_modules/npm/bin/npm-cli.js" "run" "server" "--scripts-prepend-node-path=auto"
+18 error node v6.11.0
+19 error npm  v3.10.10
+20 error file sh
+21 error code ELIFECYCLE
+22 error errno ENOENT
+23 error syscall spawn
+24 error day1@1.0.0 server: `http-server ./app -p 8080 -o`
+24 error spawn ENOENT
+25 error Failed at the day1@1.0.0 server script 'http-server ./app -p 8080 -o'.
+25 error Make sure you have the latest version of node.js and npm installed.
+25 error If you do, this is most likely a problem with the day1 package,
+25 error not with npm itself.
+25 error Tell the author that this fails on your system:
+25 error     http-server ./app -p 8080 -o
+25 error You can get information on how to open an issue for this project with:
+25 error     npm bugs day1
+25 error Or if that isn't available, you can get their info via:
+25 error     npm owner ls day1
+25 error There is likely additional logging output above.
+26 verbose exit [ 1, true ]

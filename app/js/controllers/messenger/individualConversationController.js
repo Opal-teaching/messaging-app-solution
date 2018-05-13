@@ -34,6 +34,11 @@
         vm.messageContent = "";
         vm.sendMessage = sendMessage;
         vm.deleteConversation = deleteConversation;
+
+        // Local variables
+		let refFirebase = firebase.database();
+
+
         initController();
         //////////////////////////
 	    /**
@@ -43,8 +48,27 @@
 	     * @description Initializes the controller
 	     */
         function initController() {
-            vm.conversation = navi.getCurrentPage().options.conversation;
-	        vm.noMessages = (!(vm.conversation.messages && vm.conversation.messages.length > 0));
+            let naviParam = navi.getCurrentPage().options;
+            if(naviParam)
+			{
+				vm.conversation = naviParam.param;
+                refFirebase.child("messages"+"/"+vm.conversation.convId).once("value",function(messages){
+					vm.messages =messages;
+				});
+                refFirebase.child("messages"+"/"+naviParam.convId).on("child_added",function(snap){
+					if (snap.val())
+					{
+                        vm.messages.push = snap.val();
+					}else{
+						vm.messages = [];
+					}
+
+
+                });
+			}else{
+            	ons.notification.alert({message:"Problem occurred fetching conversation"});
+            	navi.resetToPage("./views/messages/conversations.html");
+			}
         }
 	    /**
 	     * @ngdoc method

@@ -1,39 +1,50 @@
 <ons-page ng-controller="NewConversationController as vm">
     <ons-toolbar>
         <div class="left">
-            <ons-toolbar-button ng-click="navi.popPage()" >
+            <ons-toolbar-button modifier="outline" ng-click="navi.popPage()" >
                 Close
-                <!--<ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>-->
             </ons-toolbar-button>
         </div>
         <div class="center">
-            Timeline
+            Users
         </div>
         <div class="right">
-            <ons-toolbar-button>
-                <ons-icon icon="ion-ios-search-strong" fixed-width="false" style="font-size: 26px; vertical-align: -4px;"></ons-icon>
-            </ons-toolbar-button>
         </div>
     </ons-toolbar>
-    <div class="msg-app-new-conversation-login-form">
+    <ons-list>
+        <ons-list-item style="margin-top:10px">
+            <input type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchUserStr">
 
-        <input type="text" class="msg-app-new-conversation-text-input--underbar" placeholder="name" value=""
-               ng-model="vm.name">
-        <input type="text" class="msg-app-new-conversation-text-input--underbar" placeholder="Image Url" value=""
-            ng-model="vm.imageUrl">
-        <br>
-        <div ng-show="vm.name">
-           <p> Name: {{vm.name}}</p>
-        </div>
-        <div ng-show="vm.imageUrl" >
-            <p> Image:</p>
-            <img ng-src="{{vm.imageUrl}}" alt="" class="msg-app-new-conversation-image">
-        </div>
-
-        <br><br>
-        <ons-button modifier="large" class="msg-app-new-conversation-login-button" ng-click="vm.createConversation()"
-                    ng-disabled="vm.checkFields()">
-            Create Conversation
-        </ons-button>
+        </ons-list-item>
+    </ons-list>
+    <div class="center" style="text-align: center" ng-if="vm.emptyConversations">
+        <p class="msg-app-conversations-empty">No conversations!</p>
     </div>
+    <ons-list class="timeline" modifier="inset" ng-show="!vm.emptyConversations">
+        <ons-list-item class="timeline-li" modifier="tappable"
+                       ng-repeat="(userId, user) in vm.users | filterObject: vm.searchUserStr"
+                       ng-click="vm.goToConversation(userId, user)">
+
+            <ons-row align="center">
+                <ons-col width="50px">
+                    <img ng-src="{{user.imageUrl}}" class="user-image">
+                </ons-col>
+
+                <ons-col>
+                    <div class="timeline-date">
+                         <span ng-show="user.online"class="timeline-name">
+                        </span>
+                    </div>
+                    <div class="timeline-from">
+                        <span class="timeline-name">{{user.firstname}} {{user.lastname}}</span>
+                        <span ng-show="user.online"class="timeline-name" style="margin-top: -2px;position:absolute">
+                            <ons-icon icon="ion-record" style="color: forestgreen;font-size: 10px" "></ons-icon>
+                        </span>
+                        <br>
+                        <span class="timeline-message">@{{user.username}}</span>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-list>
 </ons-page>

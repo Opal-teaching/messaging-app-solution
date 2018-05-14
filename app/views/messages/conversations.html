@@ -24,7 +24,7 @@
     </div>
     <ons-list class="timeline" modifier="inset" ng-show="vm.conversations.length > 0">
         <ons-list-item class="timeline-li" modifier="tappable"
-                       ng-repeat="conversation in vm.conversations | orderBy: 'lastMessage':true:orderByDate|filter: vm.searchConversationString"
+                       ng-repeat="conversation in vm.conversations |orderByLastMessage:true |filter:vm.searchConversationString"
                        ng-click="vm.goToConversation(conversation)">
 
 
@@ -37,6 +37,9 @@
                     <div class="timeline-date">{{conversation.lastMessage.messageDate|date: 'MMM d, y h:mm a'}}</div>
                     <div class="timeline-from">
                         <span class="timeline-name">{{conversation.user.firstname}} {{conversation.user.lastname}}</span>
+                        <span ng-show="conversation.user.online"class="timeline-name" style="margin-right:5px;margin-top: -2px;position:absolute">
+                            <ons-icon icon="ion-record" style="color: forestgreen;font-size: 10px" "></ons-icon>
+                        </span>
                     </div>
 
                     <div class="timeline-message">

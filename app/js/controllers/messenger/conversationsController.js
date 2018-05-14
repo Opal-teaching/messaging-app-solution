@@ -31,13 +31,12 @@
 
 	    vm.newConversation = newConversation;
         vm.goToConversation = goToConversation;
-        $scope.orderByDate = orderByDate;
 		vm.logout = logout;
 
 		// local variables
 		let user = UserService.getUser();
-		let refUser = firebase.database().ref("users/"+user.userId);
-
+		let refUser = firebase.database().ref("users");
+		let refConversations = firebase.database().ref("conversations");
         initController();
 
 
@@ -51,27 +50,15 @@
 	     */
         function initController(){
 
-			// if(user.conversations)
-			// {
-             //    MessengerService.getConversations().then((convs)=>{
-             //        $timeout(()=>{
-             //            console.log(convs);
-             //            vm.conversations = convs;
-             //        });
-             //    }).catch((err)=>{
-             //        console.log(err);
-             //        ons.notification.alert({message:"Error occurred while fetching conversations"});
-             //    });
-			// }
-
-	        // Initialize events
-            refUser.child("conversations").on("child_added",(snap)=>{
+	        refUser.child(user.userId+"/conversations").on("child_added",(snap)=>{
             	if(snap.exists())
 				{
 					console.log(snap.key, snap.val());
 					let convId = snap.key;
 					MessengerService.getConversationById(convId)
 						.then((conv)=>{
+							addConversationListeners(conv);
+							addOnlineListeners(conv);
 							$timeout(()=>{
 								vm.conversations.push(conv);
 							});
@@ -79,10 +66,8 @@
 							console.log(err);
 					});
 				}
-
-			});
+	        });
         }
-
 	    /**
 	     * @ngdoc method
 	     * @name messaging-app.controller:ConversationsController#newConversation
@@ -103,10 +88,30 @@
             navi.pushPage("./views/messages/individual-conversation.html",{param: conversation});
         }
 
-        function orderByDate(first,second){
-        	console.log(first,second);
-        	return first>second;
+        function addConversationListeners(conv){
+
+            refConversations.child(conv.convId+"/lastMessage").on("value",(snap)=>{
+            	if(snap.exists())
+	            {
+	            	$timeout(()=>{
+			            vm.conversations = vm.conversations.map((convTemp)=>{
+				            if(convTemp.convId === conv.convId) convTemp.lastMessage = snap.val();
+				            return convTemp;
+			            });
+		            });
+	            }
+            });
 		}
+	    function addOnlineListeners(conv){
+		    refUser.child(conv.user.userId+"/online").on("value",(snap)=>{
+				    $timeout(()=>{
+					    vm.conversations = vm.conversations.map((convTemp)=>{
+						    if(convTemp.convId === conv.convId) convTemp.user.online = snap.val();
+						    return convTemp;
+					    });
+				    });
+		    });
+	    }
         /**
         * @ngdoc method
         * @name module_name.type_angular:name_type#method_name
@@ -125,7 +130,8 @@
 	     * @description Listens to the controller destruction and kills event listeners.
 	     */
         $scope.$on('$destroy', function() {
-		    navi.off("postpop");
+		    refConversations.off();
+		    refUser.off();
 	    });
     }
 })();

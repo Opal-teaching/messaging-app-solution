@@ -79,10 +79,19 @@
 	     */
         function getConversations() {
         	let promises = [];
-			Object.keys(user.conversations).forEach((convId)=>{
-				promises.push(getConversationById(convId));
-			});
-        	return $q.all(promises);
+			return UserService.getUserConversations()
+				.then((conversations)=>{
+					if(conversations)
+					{
+						Object.keys(conversations).forEach((convId)=>{
+							promises.push(getConversationById(convId));
+						});
+					}else{
+						return $q.resolve([]);
+					}
+
+					return $q.all(promises);
+				})
 	    }
 	    /**
 	     * @ngdoc method

@@ -28,6 +28,7 @@
             setUserAtRegistration:setUserAtRegistration,
             setAuthenticatedUser:setAuthenticatedUser,
             getUserById:getUserById,
+			getUserConversations:getUserConversations,
             logout:logout
 		};
 		/////////////////
@@ -106,8 +107,21 @@
 			});
 			return deferred.promise;
 		}
+
+		function getUserConversations()
+		{
+			let deferred = $q.defer();
+			refUsers.child(user.userId+"/conversations")
+				.once("value",(snap)=>{
+					if(snap.exists()) deferred.resolve(snap.val());
+				}).catch((err)=>{
+				deferred.reject(err);
+			});
+			return deferred.promise;
+		}
 		function logout()
 		{
+			refUsers.child(user.userId).update({online:null});
 			firebase.auth().signOut();
 		}
 

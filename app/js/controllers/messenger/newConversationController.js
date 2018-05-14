@@ -9,8 +9,8 @@
 	 * @description Manages  ./views/messages/new-conversation.html
 	 */
 	module.controller("NewConversationController", NewConversationController);
-	NewConversationController.$inject = ["MessengerService", "UserService","$timeout"];
-	function NewConversationController(MessengerService, UserService,  $timeout){
+	NewConversationController.$inject = ["MessengerService", "UserService","$timeout", "$scope"];
+	function NewConversationController(MessengerService, UserService,  $timeout, $scope){
 		let vm = this;
 		/**
 		 * @ngdoc property
@@ -122,5 +122,10 @@
 			return vm.imageUrl === "" || vm.name === "";
 
 		}
+
+		$scope.$on("$destroy",()=>{
+			refConversations.off();
+			refUsers.off();
+		});
 	}
 })();

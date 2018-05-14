@@ -47,19 +47,19 @@
         <ons-list-header>Image</ons-list-header>
         <ons-row>
             <ons-col>
-                <input class="text-input--underbar" placeholder="Enter Image Url" ng-model="vm.imageUrl">
+                <input class="text-input--underbar" placeholder="Enter Image Url" ng-model="vm.imageSrc">
             </ons-col>
         </ons-row>
         <ons-row align="center" style="height:60px">
             <ons-col>
                 <div style="text-align: center;margin-top: 10px">
-                    <img ng-src="{{vm.imageUrl}}" alt="" style="width:auto;height: 60px">
+                    <img ng-src="{{vm.imageSrc}}" alt="" style="width:auto;height: 60px">
                 </div>
             </ons-col>
         </ons-row>
 
         <br>
-        <ons-button ng-click="vm.registerUser(vm.username,vm.email,vm.password, vm.firstname, vm.lastname, vm.imageUrl)" modifier="large">Register</ons-button>
+        <ons-button ng-click="vm.registerUser(vm.username,vm.email,vm.password, vm.firstname, vm.lastname, vm.imageSrc)" modifier="large">Register</ons-button>
 
     </div>
 </ons-page>

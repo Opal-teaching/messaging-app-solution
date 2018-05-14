@@ -8,8 +8,8 @@
 	 * @description Manages  ./views/messages/individual-conversation.html
 	 */
     module.controller("IndividualConversationController", IndividualConversationController);
-    IndividualConversationController.$inject = ["MessengerService", "$timeout","UserService"];
-    function IndividualConversationController(MessengerService, $timeout, UserService) {
+    IndividualConversationController.$inject = ["MessengerService", "$timeout","UserService", "$scope"];
+    function IndividualConversationController(MessengerService, $timeout, UserService, $scope) {
         var vm = this;
 	    /**
 	     * @ngdoc property
@@ -59,19 +59,7 @@
 			{
 				vm.conversation = naviParam.param;
                 refFirebase.child("messages"+"/"+vm.conversation.convId)
-					.once("value",(snap)=>{
-                	$timeout(()=>{
-                		console.log("What");
-                        if(snap.exists()) {
-                        	vm.messages = Object.values(snap.val());
-                        	console.log(vm.messages);
-
-                        }
-                    });
-				});
-                refFirebase.child("messages"+"/"+vm.conversation.convId)
 					.on("child_added",function(snap){
-						console.log(snap.val());
 						$timeout(()=>{
                             if (snap.val()) vm.messages.push(snap.val());
                         });
@@ -108,14 +96,10 @@
 	     */
         function deleteConversation() {
             navi.popPage();
-        	// var res = MessengerService.deleteConversation(vm.conversation.id);
-        	// if(!res)
-	        // {
-		     //    ons.notification.alert({message: 'An error has occurred deleting conversation'});
-	        // }else{
-		     //
-	        // }
-
         }
+
+	    $scope.$on("$destroy",()=>{
+	    	refFirebase.off();
+	    });
     }
 })();

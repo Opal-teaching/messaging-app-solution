@@ -16,7 +16,7 @@
 		vm.email = "";
 		vm.username = "";
 		vm.password = "";
-		vm.imageUrl = "";
+		vm.imageSrc = "";
         vm.firstname = "";
         vm.lastname = "";
         vm.registerUser = registerUser;
@@ -47,7 +47,8 @@
                             firebase.auth().createUserWithEmailAndPassword(email, password)
                                 .then(function(credentials){
                                     let userId = credentials.user.uid;
-                                    UserService.setUserAtRegistration(userId, user, email,firstname, lastname, contentImage)
+                                    UserService.setUserAtRegistration(userId, user, email,
+	                                    firstname, lastname, contentImage)
                                         .then(()=>{
                                             ons.notification.confirm({
                                                 message: "Successfull registered",
@@ -100,7 +101,18 @@
 				})
 			})	.then(stream => new Response(stream))
 				.then(response => response.blob())
-				.then(blob => URL.createObjectURL(blob));
+				.then(blob => new Promise((resolve,reject)=>{
+						let reader = new FileReader();
+						reader.readAsDataURL(blob);
+						reader.onloadend = function() {
+							base64data = reader.result;
+							base64data = base64data.substring(0,5) + "image/png;" + base64data.substring(6)
+							resolve(base64data);
+						}
+					})
+
+
+				);
 		}
 		/**
 		 * @ngdoc method

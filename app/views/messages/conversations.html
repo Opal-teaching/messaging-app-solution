@@ -17,33 +17,32 @@
     <ons-list>
         <ons-list-item style="margin-top:10px">
             <input type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchConversationString">
-
         </ons-list-item>
     </ons-list>
-    <div class="center" style="text-align: center" ng-if="vm.emptyConversations">
+    <div class="center" style="text-align: center" ng-show="vm.conversations.length === 0">
         <p class="msg-app-conversations-empty">No conversations!</p>
     </div>
-    <ons-list class="timeline" modifier="inset" ng-show="!vm.emptyConversations">
+    <ons-list class="timeline" modifier="inset" ng-show="vm.conversations.length > 0">
         <ons-list-item class="timeline-li" modifier="tappable"
-                       ng-repeat="conversation in vm.conversations | filterObject: vm.searchConversationString"
+                       ng-repeat="conversation in vm.conversations | orderBy: 'lastMessage':true:orderByDate|filter: vm.searchConversationString"
                        ng-click="vm.goToConversation(conversation)">
 
 
-            <ons-row>
+            <ons-row align="center">
                 <ons-col width="50px">
-                    <img ng-src="{{conversation.imageUrl}}" class="timeline-image">
+                    <img ng-src="{{conversation.user.imageUrl}}" class="timeline-image">
                 </ons-col>
 
                 <ons-col>
                     <div class="timeline-date">{{conversation.lastMessage.messageDate|date: 'MMM d, y h:mm a'}}</div>
                     <div class="timeline-from">
-                        <span class="timeline-name">{{conversation.user_1}}</span>
+                        <span class="timeline-name">{{conversation.user.firstname}} {{conversation.user.lastname}}</span>
                     </div>
 
                     <div class="timeline-message">
 
                         <p ng-show="conversation.lastMessage" style="color:grey">
-                            {{conversation.lastMessage.from}}: {{conversation.lastMessage.messageContent}}</p>
+                            @{{conversation.lastMessage.from.username}}: {{conversation.lastMessage.messageContent}}</p>
                         <p ng-show="!conversation.lastMessage" class="msg-app-conversations-empty"> Empty Conversation</p>
                     </div>
                 </ons-col>

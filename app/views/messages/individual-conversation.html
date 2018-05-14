@@ -25,24 +25,26 @@
     <ons-button ng-click="vm.sendMessage()" ng-disabled="!vm.messageContent" modifier="large">Send Message</ons-button>
     <br>
 
-    <div class="center" style="text-align: center" ng-if="vm.noMessages">
+    <div class="center" style="text-align: center" ng-if="vm.messages.length === 0">
         <p class="msg-app-conversations-empty"> No messages!</p>
         <!--<svg class="progress-circular">-->
         <!--<circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="10"/>-->
         <!--</svg>-->
     </div>
-    <ons-list class="timeline" ng-show="!vm.noMessages">
-        <ons-list-item class="timeline-li" ng-repeat="message in vm.conversation.messages">
-            <ons-row>
+    <ons-list class="timeline" ng-show="vm.messages.length > 0 ">
+        <ons-list-item class="timeline-line" ng-repeat="message in vm.messages | orderBy: 'messageDate':true">
+            <ons-row align="center">
 
+                    <ons-col width="50px">
+                        <img ng-src="{{message.from.imageUrl}}" class="user-image">
+                    </ons-col>
                 <ons-col>
                     <div class="timeline-date">{{message.messageDate|date: 'MMM d, y h:mm a'}}</div>
                     <div class="timeline-from">
-                        <span class="timeline-name">{{message.from}}</span>
+                        <span class="timeline-name">{{message.from.firstname}} {{message.from.lastname}} <span style="color: grey;">@{{message.from.username}}</span></span><br>
+                        <span>{{message.messageContent}}</span>
                     </div>
-                    <div class="timeline-message">
-                        {{message.messageContent}}
-                    </div>
+
                 </ons-col>
             </ons-row>
         </ons-list-item>

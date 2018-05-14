@@ -85,7 +85,8 @@
 		 * @ngdoc method
 		 * @name messaging-app.controller:NewConversationController#createConversation
 		 * @methodOf messaging-app.controller:NewConversationController
-		 * @description Calls {@link  messaging-app.service:MessengerService#addConversation MessengerService.addConversation}
+		 * @description Calls {@link  messaging-app.service:MessengerService#addConversation
+		 * 						MessengerService.addConversation}
 		 *              to add a conversation for the user
 		 */
 		function goToConversation(user_convId, user_conv){
@@ -97,10 +98,14 @@
 			refConversations.child(convId).once("value",function(snap){
 					if(snap.exists())
 					{
-						navi.pushPage("./views/messages/individual_conversation.html",{param: snap.val()});
+						console.log(navi.getPages());
+						navi.replacePage("./views/messages/individual-conversation.html",
+							{param: snap.val(), animation:"lift"});
 					}else{
-						MessengerService.addConversation(convId, user_conv).then((conv)=>{
-                            navi.pushPage("./views/messages/individual_conversation.html",{param: conv});
+						MessengerService.addConversation(user, user_conv, convId).then((conv)=>{
+							console.log(conv);
+                            navi.replacePage("./views/messages/individual-conversation.html",
+								{param: conv, animation:"lift"});
 						}).catch(()=>{
 							ons.notification.alert({message:"Problem adding conversation"});
 						});

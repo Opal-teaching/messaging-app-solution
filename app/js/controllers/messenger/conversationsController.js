@@ -20,13 +20,7 @@
 	     * @description Contains array of conversations
 	     */
         vm.conversations = [];
-	    /**
-	     * @ngdoc property
-	     * @name messaging-app.controller:ConversationsController#emptyConversations
-	     * @propertyOf messaging-app.controller:ConversationsController
-	     * @description Flag to determine when to show 'No message'
-	     */
-	    vm.emptyConversations = true;
+
 	    /**
 	     * @ngdoc property
 	     * @name messaging-app.controller:ConversationsController#searchConversationString
@@ -37,8 +31,12 @@
 
 	    vm.newConversation = newConversation;
         vm.goToConversation = goToConversation;
+        $scope.orderByDate = orderByDate;
 		vm.logout = logout;
 
+		// local variables
+		let user = UserService.getUser();
+		let refUser = firebase.database().ref("users/"+user.userId);
 
         initController();
 
@@ -53,15 +51,36 @@
 	     */
         function initController(){
 
-	        // vm.conversations = MessengerService.getConversations();
-			// vm.conversations = vm.conversations.sort(function(conv1,conv2){
-			// 	return conv1.lastMessage.messageDate > conv2.lastMessage.messageDate;
-			// });
-			vm.emptyConversations = (vm.conversations.length === 0);
+			// if(user.conversations)
+			// {
+             //    MessengerService.getConversations().then((convs)=>{
+             //        $timeout(()=>{
+             //            console.log(convs);
+             //            vm.conversations = convs;
+             //        });
+             //    }).catch((err)=>{
+             //        console.log(err);
+             //        ons.notification.alert({message:"Error occurred while fetching conversations"});
+             //    });
+			// }
 
 	        // Initialize events
-            initializeEvents();
+            refUser.child("conversations").on("child_added",(snap)=>{
+            	if(snap.exists())
+				{
+					console.log(snap.key, snap.val());
+					let convId = snap.key;
+					MessengerService.getConversationById(convId)
+						.then((conv)=>{
+							$timeout(()=>{
+								vm.conversations.push(conv);
+							});
+						}).catch((err)=>{
+							console.log(err);
+					});
+				}
 
+			});
         }
 
 	    /**
@@ -81,26 +100,13 @@
 	     *              conversation as parameter
 	     */
         function goToConversation(conversation) {
+            navi.pushPage("./views/messages/individual-conversation.html",{param: conversation});
+        }
 
-            navi.pushPage("./views/messages/individual-conversation.html",{conversation:conversation});
-        }
-	    /**
-	     * @ngdoc method
-	     * @name messaging-app.controller:ConversationsController#initializeEvents
-	     * @methodOf messaging-app.controller:ConversationsController
-	     * @description Initializes navigator event to refresh conversations
-	     */
-        function initializeEvents() {
-	        navi.on("prepop",function(event){
-                // $timeout(function(){
-		         //    vm.conversations = MessengerService.getConversations();
-		         //    vm.conversations = vm.conversations.sort(function(conv1,conv2){
-			     //        return new Date(conv1.lastMessage.messageDate) < new Date(conv2.lastMessage.messageDate);
-		         //    });
-		         //    vm.emptyConversations = (vm.conversations.length === 0);
-                // });
-	        });
-        }
+        function orderByDate(first,second){
+        	console.log(first,second);
+        	return first>second;
+		}
         /**
         * @ngdoc method
         * @name module_name.type_angular:name_type#method_name

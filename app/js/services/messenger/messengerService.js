@@ -15,11 +15,13 @@
 	     * @name messaging-app.service:MessengerService#conversations
 	     * @propertyOf messaging-app.service:MessengerService
 	     * @description Contains the conversations of the messaging app for this particular user.
-	     * @type {Array}
+	     * @type {!firebase.database.Reference}
 	     */
-        var conversations = [];
-        var refConversations = firebase.database().ref("conversations");
-	    /**
+        const refConversations = firebase.database().ref("conversations");
+        const refMessages = firebase.database().ref("messages");
+        const refUsers = firebase.database().ref("users");
+        const user = UserService.getUser();
+        /**
 	     *
 	     * @type {{addConversation: addConversation, getConversations: getConversations, getConversationMessages: getConversationMessages, getConversationsFromServer: getConversationsFromServer}}
 	     */
@@ -45,13 +47,14 @@
   	     * @description Takes a name and an imageUrl, and adds a new conversation onto the conversations array.
 	     * @param {string} convId ConversationId
 		 * @param {string} user_conv User to start a conversation with
-		 * @returns {Promise} Returns promise.
+		 * @returns {!firebase.Promise<*>} Returns promise.
 	     */
-        function addConversation(convId, user_conv){
+        function addConversation(user, user_conv, convId){
             let members = {};
             members[user_conv.userId] = true;
+			console.log(UserService.getUser());
             members[UserService.getUser().userId] = true;
-
+			console.log(members);
             let newConversation = {};
             newConversation[convId] = {
 				convId: convId,
@@ -59,7 +62,12 @@
             };
 			return refConversations.update(newConversation)
 				.then(()=>{
-					return newConversation;
+					const userConv = {};
+					userConv[convId] = true;
+					return refUsers.child(user.userId+"/conversations")
+						.update(userConv).then(()=>{
+                        return newConversation[convId];
+					});
 				});
         }
 	    /**
@@ -70,71 +78,92 @@
 	     * @returns {Array} conversations array.
 	     */
         function getConversations() {
-        	var deferred = $q.defer();
-		    refDB.once("value",function(snap){
-				if(snap.exists())
-				{
-					deferred.resolve(snap.val());
-				}
-		    }).catch(function(err){
-				deferred.reject(err);
-		    });
-		    return deferred.promise;
+        	let promises = [];
+			Object.keys(user.conversations).forEach((convId)=>{
+				promises.push(getConversationById(convId));
+			});
+        	return $q.all(promises);
 	    }
 	    /**
 	     * @ngdoc method
 	     * @name messaging-app.service:MessengerService#getConversationById
 	     * @methodOf messaging-app.service:MessengerService
-	     * @param {string|number} id Conversation id
+	     * @param {string|number} convId Conversation id
 	     * @description Searches and returns a conversation based on an id
-	     * @returns {Object|null} conversation matching the id, or null when not found
+	     * @returns {Promise} conversation matching the id, or null when not found
 	     */
-	    function getConversationById(id)
+	    function getConversationById(convId)
 	    {
-		    var deferred = $q.defer();
-		    if(typeof id === "undefined") deferred.reject("Invalid Parameter");
-		    refDB.child(id).once("value",function(snap){
-			    if(snap.exists())
-			    {
-				    deferred.resolve(snap.val());
-			    }
-		    }).catch(function(err){
-			    deferred.reject(err);
-		    });
-		    return deferred.promise;
+	    	let defer = $q.defer();
+		   refConversations.child(convId).once("value",(snap)=>{
+
+		   	// Get last message
+
+		    // Get members
+			let conversation = snap.val();
+			let members = conversation.members;
+			let membersPromises = [];
+			Object.keys(members).forEach((userId)=>{
+                membersPromises.push(UserService.getUserById(userId));
+			});
+			return $q.all(membersPromises).then((users)=>{
+                let otherUser = {};
+				users.forEach((mem)=>{
+                    members[mem.userId] = mem;
+					if(mem.userId !== user.userId ) otherUser = mem;
+				});
+				if(membersPromises.length === 1) conversation.user = user;
+				else conversation.user = otherUser;
+                conversation.members = members;
+				defer.resolve(conversation);
+			});
+           }).catch((err)=>defer.reject(err));
+		   return defer.promise;
 	    }
 
-	    /**
-	     * @ngdoc method
-	     * @name messaging-app.service:MessengerService#sendMessage
-	     * @methodOf messaging-app.service:MessengerService
-	     * @param {string} conversationId Conversation id
-  	     * @param {string} messageContent Conversation id
-	     * @description Adds a message to a conversation.
-	     */
-        function sendMessage(conversationId, messageContent) {
-		    var deferred = $q.defer();
-		    return deferred.promise;
-            var messageDate = new Date();
-            var msg_id = conversations[conversationId].messages.length;
-            var message = {
-	            "messageContent":messageContent,"messageDate":new Date(),"messageId":msg_id,"from":UserService.getUser()
+        /**
+         * @ngdoc method
+         * @name messaging-app.service:MessengerService#sendMessage
+         * @methodOf messaging-app.service:MessengerService
+         * @param {string} conversationId Conversation id
+         * @param {string} messageContent Conversation id
+		 * @returns {!firebase.Promise<void>}
+         * @description Adds a message to a conversation, to do this, it updates three references.
+		 * 				The lastMessage in conversation,
+         */
+        function sendMessage(conversationId, user, messageContent) {
+			console.log(conversationId);
+            // Update three places, last message, conversaiton, and messages
+            let messageId = refConversations.push().key;
+            const message = {
+            	"messageId":messageId,
+                "messageContent":messageContent,
+				"messageDate":firebase.database.ServerValue.TIMESTAMP,
+                "from":{
+            		"firstname": user.firstname,
+					"lastname":user.lastname,
+					"userId":user.userId,
+					"username":user.username,
+					"imageUrl":user.imageUrl
+                }
             };
-
-            var searchConv = conversations.filter(function(item){
-            	return item.id === conversationId;
-            });
-
-			if(searchConv.length !== 1) {
-				return false;
-			}
-		    refDB.child(conversationId+"/messages").push().catch(function(err){
-			    deferred.reject(err);
-		    });
-
-			return true;
+            const messageConvUpdate = {};
+            messageConvUpdate[messageId] = true;
+            const convUpdate = {
+            	lastMessage: message,
+				messages: messageConvUpdate
+			};
+            return refConversations.child(conversationId)
+				.update(convUpdate) // Update conversation
+				.then(()=>{
+                    const convMessage = {};
+                    convMessage[messageId] = message;
+					return refMessages.child(conversationId).update(convMessage);
+				}).then(()=>{
+					return message;
+				});
         }
-	    /**
+        /**
 	     * @ngdoc method
 	     * @name messaging-app.service:MessengerService#deleteConversation
 	     * @methodOf messaging-app.service:MessengerService

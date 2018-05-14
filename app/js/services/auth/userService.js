@@ -27,6 +27,7 @@
             getUserFirebaseRef:getUserFirebaseRef,
             setUserAtRegistration:setUserAtRegistration,
             setAuthenticatedUser:setAuthenticatedUser,
+            getUserById:getUserById,
             logout:logout
 		};
 		/////////////////
@@ -94,6 +95,17 @@
 			return deferred.promise;
 		}
 
+		function getUserById(userId)
+		{
+			let deferred = $q.defer();
+			refUsers.child(userId)
+				.once("value",(snap)=>{
+					if(snap.exists()) deferred.resolve(snap.val());
+				}).catch((err)=>{
+                deferred.reject(err);
+			});
+			return deferred.promise;
+		}
 		function logout()
 		{
 			firebase.auth().signOut();

@@ -20,12 +20,14 @@ otherwise, it pops the current page.</p>
 </div></div>
 </li>
 <li><h3 id="methods_initcontroller">initController()</h3>
-<div class="initcontroller"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-initcontroller-page"><p>Initializes the controller</p>
+<div class="initcontroller"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-initcontroller-page"><p>Initializes the controller, obtains conversation from navigator,
+then listens to new messages being added to that conversation.
+If error fetching conversation, it displays an alert.</p>
 </div></div>
 </li>
 <li><h3 id="methods_sendmessage">sendMessage()</h3>
-<div class="sendmessage"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-sendmessage-page"><p>Calls the MessengerService to add a message to the conversation array, updates vm.conversations
-after.</p>
+<div class="sendmessage"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-sendmessage-page"><p>Calls the MessengerService to add a message, if error,
+displays Onsen alert.</p>
 </div></div>
 </li>
 </ul>
@@ -33,6 +35,10 @@ after.</p>
 <div class="member property"><h2 id="properties">Properties</h2>
 <ul class="properties"><li><h3 id="properties_conversation">conversation</h3>
 <div class="conversation"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-conversation-page"><p>Contains the current conversation in the page.</p>
+</div></div>
+</li>
+<li><h3 id="properties_messagecontent">messageContent</h3>
+<div class="messagecontent"><div class="messaging-app-controller-page messaging-app-controller-individualconversationcontroller-messagecontent-page"><p>Contains the new message contents</p>
 </div></div>
 </li>
 <li><h3 id="properties_messagecontent">messageContent</h3>

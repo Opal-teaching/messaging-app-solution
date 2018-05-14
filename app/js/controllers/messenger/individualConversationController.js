@@ -51,7 +51,9 @@
 	     * @ngdoc method
 	     * @name messaging-app.controller:IndividualConversationController#initController
 	     * @methodOf messaging-app.controller:IndividualConversationController
-	     * @description Initializes the controller
+	     * @description Initializes the controller, obtains conversation from navigator,
+	     *              then listens to new messages being added to that conversation.
+	     *              If error fetching conversation, it displays an alert.
 	     */
         function initController() {
             let naviParam = navi.getCurrentPage().options;
@@ -73,14 +75,13 @@
 	     * @ngdoc method
 	     * @name messaging-app.controller:IndividualConversationController#sendMessage
 	     * @methodOf messaging-app.controller:IndividualConversationController
-	     * @description Calls the MessengerService to add a message to the conversation array, updates vm.conversations
-	     *              after.
+	     * @description Calls the MessengerService to add a message, if error,
+	     *              displays Onsen alert.
 	     */
         function sendMessage() {
         	console.log(vm.conversation, user);
         	MessengerService.sendMessage(vm.conversation.convId, user,
 					vm.messageContent).catch((err)=>{
-        			console.log(err);
 					ons.notification.alert({message:"Problem connecting with server"});
 			});
             vm.messageContent = "";
@@ -90,6 +91,7 @@
 	     * @ngdoc method
 	     * @name messaging-app.controller:IndividualConversationController#deleteConversation
 	     * @methodOf messaging-app.controller:IndividualConversationController
+	     * @deprecated
 	     * @description Makes a call to {@link messaging-app.service:MessengerService#deleteConversation MessengerService} to
 	     *              delete the current conversation in the page, if this fails, it displays an alert
 	     *              otherwise, it pops the current page.

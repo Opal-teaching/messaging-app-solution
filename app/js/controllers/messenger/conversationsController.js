@@ -12,7 +12,7 @@
 
     ConversationsController.$inject = ["MessengerService","$timeout", "$scope", "UserService"];
     function ConversationsController(MessengerService,$timeout, $scope, UserService){
-        var vm = this;
+        let vm = this;
 	    /**
 	     * @ngdoc property
 	     * @name messaging-app.controller:ConversationsController#conversations
@@ -87,7 +87,13 @@
         function goToConversation(conversation) {
             navi.pushPage("./views/messages/individual-conversation.html",{param: conversation});
         }
-
+		/**
+		 * @ngdoc method
+		 * @name messaging-app.controller:ConversationsController#addConversationListeners
+		 * @methodOf messaging-app.controller:ConversationsController
+	     * @param {Object} conv Conversation to be listened to
+	     * @description Sets the listeners on the lastMessage of every conversation for this user.
+	     */
         function addConversationListeners(conv){
 
             refConversations.child(conv.convId+"/lastMessage").on("value",(snap)=>{
@@ -102,6 +108,13 @@
 	            }
             });
 		}
+		/**
+	     * @ngdoc method
+	     * @name messaging-app.controller:ConversationsController#addOnlineListeners
+		 * @methodOf messaging-app.controller:ConversationsController
+		 * @param {Object} conv Conversation to be listened to
+	     * @description Sets the listeners on the online status of every user conversation.
+	     */
 	    function addOnlineListeners(conv){
 		    refUser.child(conv.user.userId+"/online").on("value",(snap)=>{
 				    $timeout(()=>{
@@ -112,13 +125,11 @@
 				    });
 		    });
 	    }
-        /**
+	    /**
         * @ngdoc method
-        * @name module_name.type_angular:name_type#method_name
-        * @methodOf module_name.type_angular:name_type
-        * @param {*} param1 Desc param1
-        * @returns {} Desc return
-        * @desc metho_descrition
+        * @name messaging-app.controller:ConversationsController#logout
+        * @methodOf messaging-app.controller:ConversationsController
+        * @description Logs the user out of the application by calling {@link messaging-app.service:UserService#logout}
         **/
         function logout(){
         	UserService.logout();

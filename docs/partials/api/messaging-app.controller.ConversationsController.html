@@ -15,7 +15,17 @@
 </li>
 </ul>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><h3 id="methods_gotoconversation">goToConversation()</h3>
+<ul class="methods"><li><h3 id="methods_addconversationlisteners">addConversationListeners(conv)</h3>
+<div class="addconversationlisteners"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-addconversationlisteners-page"><p>Sets the listeners on the lastMessage of every conversation for this user.</p>
+</div><h5 id="methods_addconversationlisteners_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>conv</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-addconversationlisteners-page"><p>Conversation to be listened to</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_addonlinelisteners">addOnlineListeners(conv)</h3>
+<div class="addonlinelisteners"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-addonlinelisteners-page"><p>Sets the listeners on the online status of every user conversation.</p>
+</div><h5 id="methods_addonlinelisteners_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>conv</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-addonlinelisteners-page"><p>Conversation to be listened to</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_gotoconversation">goToConversation()</h3>
 <div class="gotoconversation"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-gotoconversation-page"><p>Pushes the new-conversation.html page onto the stack with the selected
 conversation as parameter</p>
 </div></div>
@@ -24,8 +34,8 @@ conversation as parameter</p>
 <div class="initcontroller"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-initcontroller-page"><p>Initializes the controller and the scope variables</p>
 </div></div>
 </li>
-<li><h3 id="methods_initializeevents">initializeEvents()</h3>
-<div class="initializeevents"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-initializeevents-page"><p>Initializes navigator event to refresh conversations</p>
+<li><h3 id="methods_logout">logout()</h3>
+<div class="logout"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-logout-page"><p>Logs the user out of the application by calling <a href="api/messaging-app.service:UserService#logout">messaging-app.service:UserService#logout</a></p>
 </div></div>
 </li>
 <li><h3 id="methods_newconversation">newConversation()</h3>
@@ -37,10 +47,6 @@ conversation as parameter</p>
 <div class="member property"><h2 id="properties">Properties</h2>
 <ul class="properties"><li><h3 id="properties_conversations">conversations</h3>
 <div class="conversations"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-conversations-page"><p>Contains array of conversations</p>
-</div></div>
-</li>
-<li><h3 id="properties_emptyconversations">emptyConversations</h3>
-<div class="emptyconversations"><div class="messaging-app-controller-page messaging-app-controller-conversationscontroller-emptyconversations-page"><p>Flag to determine when to show &#39;No message&#39;</p>
 </div></div>
 </li>
 <li><h3 id="properties_searchconversationstring">searchConversationString</h3>

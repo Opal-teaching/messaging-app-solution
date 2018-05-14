@@ -1,41 +1,79 @@
-(function() {
-	var module = angular.module('messaging-app');
+(()=>{
+	const module = angular.module('messaging-app');
 	/**
 	 * @ngdoc controller
 	 * @name messaging-app.controller:RegistrationController
 	 * @requires $timeout
 	 * @requires $scope
-	 * @description Manages  ./views/messages/conversations.html
+	 * @description Manages  ./views/auth/register-user.html
 	 */
 	module.controller('RegistrationController', RegistrationController);
 
-	RegistrationController.$inject = [ "UserService", "$timeout", "$scope", "$http"];
+	RegistrationController.$inject = [ "UserService", "$timeout"];
 
-	function RegistrationController(UserService, $timeout, $scope, $http) {
+	function RegistrationController(UserService, $timeout) {
 		let vm = this;
+		/**
+		 * @ngdoc property
+		 * @name messaging-app.controller:RegistrationController#email
+		 * @propertyOf messaging-app.controller:RegistrationController
+		 * @description Email for registration
+		 */
 		vm.email = "";
+		/**
+		 * @ngdoc property
+		 * @name messaging-app.controller:RegistrationController#username
+		 * @propertyOf messaging-app.controller:RegistrationController
+		 * @description Username for registration
+		 */
 		vm.username = "";
+		/**
+		 * @ngdoc property
+		 * @name messaging-app.controller:RegistrationController#password
+		 * @propertyOf messaging-app.controller:RegistrationController
+		 * @description Password for registration
+		 */
 		vm.password = "";
+		/**
+		 * @ngdoc property
+		 * @name messaging-app.controller:RegistrationController#imageSrc
+		 * @propertyOf messaging-app.controller:RegistrationController
+		 * @description Image src string
+		 */
 		vm.imageSrc = "";
+		/**
+		 * @ngdoc property
+		 * @name messaging-app.controller:RegistrationController#firstname
+		 * @propertyOf messaging-app.controller:RegistrationController
+		 * @description first name for registration
+		 */
         vm.firstname = "";
+		/**
+		 * @ngdoc property
+		 * @name messaging-app.controller:RegistrationController#lastname
+		 * @propertyOf messaging-app.controller:RegistrationController
+		 * @description Last name for registration
+		 */
         vm.lastname = "";
+
         vm.registerUser = registerUser;
 
 
         //////////////////////////////////////////
 		 /**
 		 * @ngdoc method
-		 * @name messaging-app.controller:RegistrationController#method_name
+		 * @name messaging-app.controller:RegistrationController#registerUser
 		 * @methodOf messaging-app.controller:RegistrationController
-         * @param user
-         * @param email
-         * @param password
-         * @param firstname
-         * @param lastname
-         * @param imageUrl
-	  	 * @desc Registers user in Firebase, sets the user in the UserService, sets the user fields in firebase
+         * @param {string} user Username for new user
+         * @param {string} email Username for new user
+         * @param {string} password Password for new user
+         * @param {string} firstname Firstname for new user
+         * @param {string} lastname Lastname for new user
+         * @param {string} imageUrl Content of imageUrl for new user
+	  	 * @desc Registers user in Firebase, sets the user in the UserService, sets the user fields in firebase,
+		  *      it first downloads the image and converts it into a base64 string.
          */
-		function registerUser(user, email, password, firstname, lastname, imageUrl)
+		function registerUser(user="", email="", password="", firstname="", lastname="", imageUrl="")
 		{
 			let invalidMessage = validateNonFirebaseFields(firstname, lastname, user);
 			if(!invalidMessage)
@@ -75,8 +113,8 @@
          * @ngdoc method
          * @name messaging-app.controller:RegistrationController#getImageContents
          * @methodOf messaging-app.controller:RegistrationController
-         * @param imageUrl
-		 * @returns {Promise} Promise with the contents of the image or error;
+         * @param {string} imageUrl Url for image
+		 * @returns {Promise} Promise with the contents of the image in base64 format or error;
          */
 		function getImageContents(imageUrl)
 		{
@@ -109,18 +147,16 @@
 							base64data = base64data.substring(0,5) + "image/png;" + base64data.substring(6)
 							resolve(base64data);
 						}
-					})
-
-
-				);
+					}
+				));
 		}
 		/**
 		 * @ngdoc method
 		 * @name messaging-app.controller:RegistrationController#validateNonFirebaseFields
 		 * @methodOf messaging-app.controller:RegistrationController
-         * @param firstname
-         * @param lastname
-         * @param user
+         * @param {string} firstname Firstname to be validated
+         * @param {string} lastname Lastname to be validated
+         * @param {string} user Username to be validated
          * @returns {string|null} Returns an invalid string message or null if fields are valid
 		 * @desc Method used to validate fields that Firebase does not validate.
          */
@@ -139,15 +175,6 @@
             }
 			return invalidMessage;
 		}
-		/**
-		 * @ngdoc event
-		 * @name messaging-app.controller:RegistrationController#property_name
-		 * @eventOf messaging-app.controller:RegistrationController
-		 * @desc Upon destruction of controller, it clears fields
-		 **/
-		$scope.$on("$destroy",function(){
-
-		});
 	}
 
 })();

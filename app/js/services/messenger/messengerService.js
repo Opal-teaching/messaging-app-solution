@@ -4,7 +4,7 @@
 	 * @name messaging-app.service:MessengerService
 	 * @description Model for the chat application, manipulates the conversations array
 	 */
-    var module = angular.module("messaging-app");
+    const module = angular.module("messaging-app");
 
     module.service("MessengerService", MessengerService);
     MessengerService.$inject = ["$q","UserService"];
@@ -12,20 +12,34 @@
     function MessengerService($q,UserService) {
 	    /**
 	     * @ngdoc property
-	     * @name messaging-app.service:MessengerService#conversations
+	     * @name messaging-app.service:MessengerService#refConversations
 	     * @propertyOf messaging-app.service:MessengerService
-	     * @description Contains the conversations of the messaging app for this particular user.
+	     * @description Firebase reference for conversations
 	     * @type {!firebase.database.Reference}
 	     */
         const refConversations = firebase.database().ref("conversations");
+	    /**
+	     * @ngdoc property
+	     * @name messaging-app.service:MessengerService#refMessages
+	     * @propertyOf messaging-app.service:MessengerService
+	     * @description Firebase reference for messages
+	     * @type {!firebase.database.Reference}
+	     */
         const refMessages = firebase.database().ref("messages");
+	    /**
+	     * @ngdoc property
+	     * @name messaging-app.service:MessengerService#refUsers
+	     * @propertyOf messaging-app.service:MessengerService
+	     * @description Firebase reference for users
+	     * @type {!firebase.database.Reference}
+	     */
         const refUsers = firebase.database().ref("users");
         const user = UserService.getUser();
         /**
 	     *
 	     * @type {{addConversation: addConversation, getConversations: getConversations, getConversationMessages: getConversationMessages, getConversationsFromServer: getConversationsFromServer}}
 	     */
-	    var service = {
+	    const service = {
             addConversation: addConversation,
             getConversations: getConversations,
 		    sendMessage:sendMessage,
@@ -47,7 +61,7 @@
   	     * @description Takes a name and an imageUrl, and adds a new conversation onto the conversations array.
 	     * @param {string} convId ConversationId
 		 * @param {string} user_conv User to start a conversation with
-		 * @returns {!firebase.Promise<*>} Returns promise.
+		 * @returns {Promise} Returns promise.
 	     */
         function addConversation(user, user_conv, convId){
             let members = {};
@@ -74,8 +88,11 @@
 	     * @ngdoc method
 	     * @name messaging-app.service:MessengerService#getConversations
 	     * @methodOf messaging-app.service:MessengerService
-	     * @description Getter for the conversations array
-	     * @returns {Array} conversations array.
+	     * @description Gets the conversation reference from the user, from then, it uses
+	     *              $q.all to query each conversation reference, calls
+	     *              {@link messaging-app.service:MessengerService#getConversationById} to set the conversation
+	     * @returns {Promise} On success it returns the conversations ready to be used by
+	     *                    the view.
 	     */
         function getConversations() {
         	let promises = [];
@@ -98,34 +115,32 @@
 	     * @name messaging-app.service:MessengerService#getConversationById
 	     * @methodOf messaging-app.service:MessengerService
 	     * @param {string|number} convId Conversation id
-	     * @description Searches and returns a conversation based on an id
-	     * @returns {Promise} conversation matching the id, or null when not found
+	     * @description Gets the converastion, gets all the members for the conversation
+	     *              by calling {@link messaging-app.service:UserService#getUserById},
+	     *              sets the appropriate partner for conversation.
+	     * @returns {Promise} On success returns a conversation ready for the controller
 	     */
 	    function getConversationById(convId)
 	    {
 	    	let defer = $q.defer();
 		   refConversations.child(convId).once("value",(snap)=>{
-
-		   	// Get last message
-
-		    // Get members
-			let conversation = snap.val();
-			let members = conversation.members;
-			let membersPromises = [];
-			Object.keys(members).forEach((userId)=>{
-                membersPromises.push(UserService.getUserById(userId));
-			});
-			return $q.all(membersPromises).then((users)=>{
-                let otherUser = {};
-				users.forEach((mem)=>{
-                    members[mem.userId] = mem;
-					if(mem.userId !== user.userId ) otherUser = mem;
+				let conversation = snap.val();
+				let members = conversation.members;
+				let membersPromises = [];
+				Object.keys(members).forEach((userId)=>{
+	                membersPromises.push(UserService.getUserById(userId));
 				});
-				if(membersPromises.length === 1) conversation.user = user;
-				else conversation.user = otherUser;
-                conversation.members = members;
-				defer.resolve(conversation);
-			});
+				return $q.all(membersPromises).then((users)=>{
+	                let otherUser = {};
+					users.forEach((mem)=>{
+	                    members[mem.userId] = mem;
+						if(mem.userId !== user.userId ) otherUser = mem;
+					});
+					if(membersPromises.length === 1) conversation.user = user;
+					else conversation.user = otherUser;
+	                conversation.members = members;
+					defer.resolve(conversation);
+				});
            }).catch((err)=>defer.reject(err));
 		   return defer.promise;
 	    }
@@ -136,13 +151,14 @@
          * @methodOf messaging-app.service:MessengerService
          * @param {string} conversationId Conversation id
          * @param {string} messageContent Conversation id
-		 * @returns {!firebase.Promise<void>}
+		 * @returns {Promise} Promise with success or failure for a given message
          * @description Adds a message to a conversation, to do this, it updates three references.
-		 * 				The lastMessage in conversation,
+		 * 				The lastMessage in conversation, the message reference in the conversation,
+         * 				and add the actual message to the messages key.
          */
         function sendMessage(conversationId, user, messageContent) {
 			console.log(conversationId);
-            // Update three places, last message, conversaiton, and messages
+            // Update three places, last message, conversation, and messages
             let messageId = refConversations.push().key;
             const message = {
             	"messageId":messageId,
@@ -177,11 +193,12 @@
 	     * @name messaging-app.service:MessengerService#deleteConversation
 	     * @methodOf messaging-app.service:MessengerService
 	     * @param {string} conversationId Conversation id
+         * @deprecated
 	     * @description Deletes conversation from the user's conversations
 	     * @returns {boolean} Returns a success or failure flag
 	     */
         function deleteConversation(conversationId){
-            var indexDelete = conversations.findIndex(function(element){
+            let indexDelete = conversations.findIndex(function(element){
 				if(element.id === conversationId) {
 
 					return true;

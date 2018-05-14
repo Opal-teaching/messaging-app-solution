@@ -2,14 +2,16 @@
     var module = angular.module("messaging-app");
     module.filter("orderByLastMessage" , orderByLastMessage);
 	orderByLastMessage.$inject = [];
-    /**
-     * @ngdoc filter
-     * @name messaging-app.filter:OrderByLastMessage
-     * @requires 'dummy dependency'
-     * @desc filters expression
-     **/
+
     function orderByLastMessage()
     {
+	    /**
+	     * @ngdoc filter
+	     * @name messaging-app.filter:OrderByLastMessage
+	     * @param {Array} list List of conversations
+	     * @param {Boolean} reverse Flag to reverse list
+	     * @description Orders conversations by lastMessage date
+	     **/
         return function(list,reverse)
         {
 			list.sort((conv,conv2)=>{

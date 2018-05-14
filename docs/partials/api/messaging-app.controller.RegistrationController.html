@@ -1,0 +1,66 @@
+<h1><code ng:non-bindable="">RegistrationController</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">messaging-app</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-page"><p>Manages  ./views/auth/register-user.html</p>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="api/ng.$timeout">$timeout</a></code>
+</li>
+<li><code ng:non-bindable=""><a href="api/ng.$scope">$scope</a></code>
+</li>
+</ul>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_getimagecontents">getImageContents(imageUrl)</h3>
+<div class="getimagecontents"><h5 id="methods_getimagecontents_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>imageUrl</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-getimagecontents-page"><p>Url for image</p>
+</div></td></tr></tbody></table><h5 id="methods_getimagecontents_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-getimagecontents-page"><p>Promise with the contents of the image in base64 format or error;</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_registeruser">registerUser(user, email, password, firstname, lastname, imageUrl)</h3>
+<div class="registeruser"><h5 id="methods_registeruser_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>user</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-registeruser-page"><p>Username for new user</p>
+</div></td></tr><tr><td>email</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-registeruser-page"><p>Username for new user</p>
+</div></td></tr><tr><td>password</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-registeruser-page"><p>Password for new user</p>
+</div></td></tr><tr><td>firstname</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-registeruser-page"><p>Firstname for new user</p>
+</div></td></tr><tr><td>lastname</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-registeruser-page"><p>Lastname for new user</p>
+</div></td></tr><tr><td>imageUrl</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-registeruser-page"><p>Content of imageUrl for new user</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_validatenonfirebasefields">validateNonFirebaseFields(firstname, lastname, user)</h3>
+<div class="validatenonfirebasefields"><h5 id="methods_validatenonfirebasefields_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>firstname</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-validatenonfirebasefields-page"><p>Firstname to be validated</p>
+</div></td></tr><tr><td>lastname</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-validatenonfirebasefields-page"><p>Lastname to be validated</p>
+</div></td></tr><tr><td>user</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-validatenonfirebasefields-page"><p>Username to be validated</p>
+</div></td></tr></tbody></table><h5 id="methods_validatenonfirebasefields_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string|null</a></td><td><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-validatenonfirebasefields-page"><p>Returns an invalid string message or null if fields are valid</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_email">email</h3>
+<div class="email"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-email-page"><p>Email for registration</p>
+</div></div>
+</li>
+<li><h3 id="properties_firstname">firstname</h3>
+<div class="firstname"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-firstname-page"><p>first name for registration</p>
+</div></div>
+</li>
+<li><h3 id="properties_imagesrc">imageSrc</h3>
+<div class="imagesrc"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-imagesrc-page"><p>Image src string</p>
+</div></div>
+</li>
+<li><h3 id="properties_lastname">lastname</h3>
+<div class="lastname"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-lastname-page"><p>Last name for registration</p>
+</div></div>
+</li>
+<li><h3 id="properties_password">password</h3>
+<div class="password"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-password-page"><p>Password for registration</p>
+</div></div>
+</li>
+<li><h3 id="properties_username">username</h3>
+<div class="username"><div class="messaging-app-controller-page messaging-app-controller-registrationcontroller-username-page"><p>Username for registration</p>
+</div></div>
+</li>
+</ul>
+</div>
+</div>

@@ -20,8 +20,14 @@
 </div></div>
 </li>
 <li><h3 id="methods_createconversation">createConversation()</h3>
-<div class="createconversation"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-createconversation-page"><p>Calls <a href="api/messaging-app.service:MessengerService#addconversation">MessengerService.addConversation</a>
-to add a conversation for the user</p>
+<div class="createconversation"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-createconversation-page"><p>Checks Firebase reference to see if the conversation exists, if it does,
+it fetches the conversation, else, it calls <a href="api/messaging-app.service:MessengerService#addconversation">MessengerService.addConversation</a>, it then pushes the</p>
+</div></div>
+</li>
+<li><h3 id="methods_initcontroller">initController()</h3>
+<div class="initcontroller"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-initcontroller-page"><p>Sets up listener to users in list, by first setting a
+once firebase event to instantiate and then using a child_changed
+event to get up to date with new users that may join.</p>
 </div></div>
 </li>
 </ul>
@@ -31,8 +37,20 @@ to add a conversation for the user</p>
 <div class="imageurl"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-imageurl-page"><p>Url for person in new conversation</p>
 </div></div>
 </li>
+<li><h3 id="properties_loading">loading</h3>
+<div class="loading"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-loading-page"><p>When the users array is loading, this flag controls the UI loading.</p>
+</div></div>
+</li>
 <li><h3 id="properties_name">name</h3>
 <div class="name"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-name-page"><p>Name for person in new conversation</p>
+</div></div>
+</li>
+<li><h3 id="properties_searchuserstr">searchUserStr</h3>
+<div class="searchuserstr"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-searchuserstr-page"><p>Variable use to filter list of users in UI</p>
+</div></div>
+</li>
+<li><h3 id="properties_users">users</h3>
+<div class="users"><div class="messaging-app-controller-page messaging-app-controller-newconversationcontroller-users-page"><p>Users array</p>
 </div></div>
 </li>
 </ul>

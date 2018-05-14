@@ -58,16 +58,21 @@
 		let user = UserService.getUser();
 		initController();
 		///////////////////////////////
+		/**
+		 * @ngdoc method
+		 * @name messaging-app.controller:NewConversationController#initController
+		 * @methodOf messaging-app.controller:NewConversationController
+		 * @description Sets up listener to users in list, by first setting a
+		 *              once firebase event to instantiate and then using a child_changed
+		 *              event to get up to date with new users that may join.
+		 */
 		function initController()
 		{
 
 			refUsers.once("value",(snap)=>{
 				$timeout(()=>{
 					vm.loading = false;
-					if(snap.exists())
-					{
-						vm.users = snap.val();
-					}
+					if(snap.exists()) vm.users = snap.val();
 				});
 			});
 			refUsers.on("child_changed",(snap)=>{
@@ -85,25 +90,21 @@
 		 * @ngdoc method
 		 * @name messaging-app.controller:NewConversationController#createConversation
 		 * @methodOf messaging-app.controller:NewConversationController
-		 * @description Calls {@link  messaging-app.service:MessengerService#addConversation
-		 * 						MessengerService.addConversation}
-		 *              to add a conversation for the user
+		 * @description Checks Firebase reference to see if the conversation exists, if it does,
+		 *              it fetches the conversation, else, it calls {@link  messaging-app.service:MessengerService#addConversation
+		 * 						MessengerService.addConversation}, it then pushes the
+		 *
 		 */
 		function goToConversation(user_convId, user_conv){
 			// Check whether conversation exists, if it does. pop this page
-           // referenceUser.child("conversations").orderByKey();
-			console.log(user_convId);
-
 			let convId = (user_conv.userId < user.userId)? user_convId+user.userId: user.userId + user_convId;
 			refConversations.child(convId).once("value",function(snap){
 					if(snap.exists())
 					{
-						console.log(navi.getPages());
 						navi.replacePage("./views/messages/individual-conversation.html",
 							{param: snap.val(), animation:"lift"});
 					}else{
 						MessengerService.addConversation(user, user_conv, convId).then((conv)=>{
-							console.log(conv);
                             navi.replacePage("./views/messages/individual-conversation.html",
 								{param: conv, animation:"lift"});
 						}).catch(()=>{
@@ -120,7 +121,6 @@
 		 */
 		function checkFields() {
 			return vm.imageUrl === "" || vm.name === "";
-
 		}
 
 		$scope.$on("$destroy",()=>{

@@ -19,7 +19,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "messaging-app",
       "shortDescription": "Manages  ./views/messages/conversations.html",
-      "keywords": "$scope $timeout animation api array controller conversation conversations conversationscontroller determine emptyconversations event flag gotoconversation html initcontroller initializeevents initializes lift manages matches message messaging-app messengerservice method names navigator new-conversation newconversation parameter property pushes refresh scope search searchconversationstring selected service stack string variables"
+      "keywords": "$scope $timeout addconversationlisteners addonlinelisteners animation api application array calling controller conv conversation conversations conversationscontroller gotoconversation html initcontroller initializes lastmessage lift listened listeners logout logs manages matches messaging-app messengerservice method names new-conversation newconversation online parameter property pushes scope search searchconversationstring selected service sets stack status string user userservice variables"
     },
     {
       "section": "api",
@@ -28,7 +28,16 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "messaging-app",
       "shortDescription": "Manages  ./views/messages/individual-conversation.html",
-      "keywords": "$timeout add alert api array call calls case contents controller conversation conversations current delete deleteconversation display displays empty fails flag html individualconversationcontroller initcontroller initializes manages message messagecontent messages messaging-app messengerservice method nomessages pops property sendmessage service updates vm"
+      "keywords": "$timeout add alert api call calls case contents controller conversation current delete deleteconversation display displays empty error fails fetching flag html individualconversationcontroller initcontroller initializes listens manages message messagecontent messages messaging-app messengerservice method navigator nomessages obtains onsen pops property sendmessage service"
+    },
+    {
+      "section": "api",
+      "id": "messaging-app.controller:LoginController",
+      "shortName": "LoginController",
+      "type": "controller",
+      "moduleName": "messaging-app",
+      "shortDescription": "Manages  ./views/messages/conversations.html",
+      "keywords": "api controller html logincontroller manages messaging-app service userservice"
     },
     {
       "section": "api",
@@ -37,7 +46,16 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "messaging-app",
       "shortDescription": "Manages  ./views/messages/new-conversation.html",
-      "keywords": "$scope $timeout add addconversation api button calls checkfields checks controller conversation createconversation fields html imageurl manages messaging-app messengerservice method newconversationcontroller ngdisabled person property service submit url user"
+      "keywords": "$scope $timeout addconversation api array button calls checkfields checks child_changed controller controls conversation createconversation event exists fetches fields filter firebase flag html imageurl initcontroller instantiate join list listener loading manages messaging-app messengerservice method newconversationcontroller ngdisabled person property pushes reference searchuserstr service sets setting submit ui url users variable"
+    },
+    {
+      "section": "api",
+      "id": "messaging-app.controller:RegistrationController",
+      "shortName": "RegistrationController",
+      "type": "controller",
+      "moduleName": "messaging-app",
+      "shortDescription": "Manages  ./views/auth/register-user.html",
+      "keywords": "$scope $timeout api base64 content contents controller converts downloads email error fields firebase firstname format getimagecontents html image imagesrc imageurl invalid lastname manages message messaging-app method null password promise property registers registeruser registration registrationcontroller returns sets src string url user username userservice valid validate validated validatenonfirebasefields"
     },
     {
       "section": "api",
@@ -50,12 +68,21 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "messaging-app.filter:OrderByLastMessage",
+      "shortName": "OrderByLastMessage",
+      "type": "filter",
+      "moduleName": "messaging-app",
+      "shortDescription": "Orders conversations by lastMessage date",
+      "keywords": "api conversations filter flag lastmessage list messaging-app orderbylastmessage orders reverse"
+    },
+    {
+      "section": "api",
       "id": "messaging-app.service:MessengerService",
       "shortName": "MessengerService",
       "type": "service",
       "moduleName": "messaging-app",
       "shortDescription": "Model for the chat application, manipulates the conversations array",
-      "keywords": "addconversation adds api app application array based chat conversation conversationid conversations deleteconversation deletes failure flag getconversationbyid getconversations getter image imageurl manipulates matching message messagecontent messaging messaging-app messengerservice method model null person property returns searches sendmessage service success takes url user"
+      "keywords": "$q actual add addconversation adds api application appropriate array calling calls chat controller converastion conversation conversationid conversations convid database deleteconversation deletes failure firebase flag getconversationbyid getconversations getuserbyid imageurl key lastmessage manipulates members message messagecontent messages messaging-app messengerservice method model partner promise property query ready refconversations reference references refmessages refusers returns sendmessage service set sets start success takes three updates user user_conv users userservice view"
     },
     {
       "section": "api",
@@ -64,7 +91,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "messaging-app",
       "shortDescription": "User authentication information",
-      "keywords": "api authentication getter getuser messaging-app method property service user username userservice"
+      "keywords": "$q accessed adds api application authentication content conversation copy correctly database email false firebase firstname flag getter getuser getuserbyid getuserconversations getuserfirebaseref imageurl lastname list local logged logout logs messaging-app method obtains online pcontentimage pemail pfirstname plastname property puser puserid reference references refusers registers returns service setauthenticateduser sets setuser success teh user userid username users userservice"
     }
   ],
   "apis": {

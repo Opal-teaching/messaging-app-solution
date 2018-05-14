@@ -6,15 +6,59 @@
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="messaging-app-service-page messaging-app-service-userservice-page"><p>User authentication information</p>
 </div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="api/ng.$q">$q</a></code>
+</li>
+</ul>
 <div class="member method"><h2 id="methods">Methods</h2>
 <ul class="methods"><li><h3 id="methods_getuser">getUser()</h3>
-<div class="getuser"><div class="messaging-app-service-page messaging-app-service-userservice-getuser-page"><p>Getter for the Username</p>
+<div class="getuser"><div class="messaging-app-service-page messaging-app-service-userservice-getuser-page"><p>Getter for a local copy of the user</p>
 </div></div>
+</li>
+<li><h3 id="methods_getuserbyid">getUserById(userId)</h3>
+<div class="getuserbyid"><div class="messaging-app-service-page messaging-app-service-userservice-getuserbyid-page"><p>Sets the user to be accessed by the application</p>
+</div><h5 id="methods_getuserbyid_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userId</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-getuserbyid-page"><p>Reference Id for user</p>
+</div></td></tr></tbody></table><h5 id="methods_getuserbyid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-getuserbyid-page"><p>On success it returns the user.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getuserconversations">getUserConversations()</h3>
+<div class="getuserconversations"><div class="messaging-app-service-page messaging-app-service-userservice-getuserconversations-page"><p>Obtains the list of conversation references for the logged in user</p>
+</div><h5 id="methods_getuserconversations_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-getuserconversations-page"><p>On success it returns the conversation references for the logged in user</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getuserfirebaseref">getUserFirebaseRef()</h3>
+<div class="getuserfirebaseref"><div class="messaging-app-service-page messaging-app-service-userservice-getuserfirebaseref-page"><p>Getter for the user reference in teh database</p>
+</div></div>
+</li>
+<li><h3 id="methods_logout">logout()</h3>
+<div class="logout"><div class="messaging-app-service-page messaging-app-service-userservice-logout-page"><p>Logs user out, sets &#39;online&#39; flag on user to false before.</p>
+</div></div>
+</li>
+<li><h3 id="methods_setauthenticateduser">setAuthenticatedUser(userId)</h3>
+<div class="setauthenticateduser"><div class="messaging-app-service-page messaging-app-service-userservice-setauthenticateduser-page"><p>Gets user information and sets a local copy of the logged in user</p>
+</div><h5 id="methods_setauthenticateduser_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userId</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setauthenticateduser-page"><p>Reference Id for user</p>
+</div></td></tr></tbody></table><h5 id="methods_setauthenticateduser_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setauthenticateduser-page"><p>On success it returns the user.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_setuser">setUser(puserId, puser, pemail, pfirstname, plastname, pcontentImage)</h3>
+<div class="setuser"><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>Adds the user to the database</p>
+</div><h5 id="methods_setuser_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>puserId</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>UserId for new user</p>
+</div></td></tr><tr><td>puser</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>Username for new user</p>
+</div></td></tr><tr><td>pemail</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>Email for new user</p>
+</div></td></tr><tr><td>pfirstname</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>Firstname for new user</p>
+</div></td></tr><tr><td>plastname</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>Lastname for new user</p>
+</div></td></tr><tr><td>pcontentImage</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>Content of imageUrl for new user</p>
+</div></td></tr></tbody></table><h5 id="methods_setuser_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="messaging-app-service-page messaging-app-service-userservice-setuser-page"><p>On success, registers the user correctly.</p>
+</div></td></tr></table></div>
 </li>
 </ul>
 </div>
 <div class="member property"><h2 id="properties">Properties</h2>
-<ul class="properties"><li><h3 id="properties_user">user</h3>
+<ul class="properties"><li><h3 id="properties_refusers">refUsers</h3>
+<div class="refusers"><div class="messaging-app-service-page messaging-app-service-userservice-refusers-page"><p>Reference to Firebase users</p>
+</div></div>
+</li>
+<li><h3 id="properties_user">user</h3>
 <div class="user"><div class="messaging-app-service-page messaging-app-service-userservice-user-page"><p>Username</p>
 </div></div>
 </li>

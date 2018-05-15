@@ -53,7 +53,6 @@
 	        refUser.child(user.userId+"/conversations").on("child_added",(snap)=>{
             	if(snap.exists())
 				{
-					console.log(snap.key, snap.val());
 					let convId = snap.key;
 					MessengerService.getConversationById(convId)
 						.then((conv)=>{
@@ -64,6 +63,7 @@
 							});
 						}).catch((err)=>{
 							console.log(err);
+							ons.notification.alert({message:"Unable to get notifications."});
 					});
 				}
 	        });
@@ -85,7 +85,7 @@
 	     *              conversation as parameter
 	     */
         function goToConversation(conversation) {
-            navi.pushPage("./views/messages/individual-conversation.html",{param: conversation});
+            navi.pushPage("./views/messages/individual-conversation.html",{conversation: conversation});
         }
 		/**
 		 * @ngdoc method

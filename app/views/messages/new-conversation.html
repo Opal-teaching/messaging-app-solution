@@ -13,17 +13,17 @@
     </ons-toolbar>
     <ons-list>
         <ons-list-item style="margin-top:10px">
-            <input type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchUserStr">
+            <textarea type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchUserStr"></textarea>
 
         </ons-list-item>
     </ons-list>
-    <div class="center" style="text-align: center" ng-if="vm.emptyConversations">
+    <div class="center" style="text-align: center" ng-if="vm.users.length === 0">
         <p class="msg-app-conversations-empty">No conversations!</p>
     </div>
-    <ons-list class="timeline" modifier="inset" ng-show="!vm.emptyConversations">
+    <ons-list class="timeline" modifier="inset" ng-show="vm.users.length > 0">
         <ons-list-item class="timeline-li" modifier="tappable"
-                       ng-repeat="(userId, user) in vm.users | filterObject: vm.searchUserStr"
-                       ng-click="vm.goToConversation(userId, user)">
+                       ng-repeat=" user in vm.users | filter: vm.searchUserStr"
+                       ng-click="vm.goToConversation(user)">
 
             <ons-row align="center">
                 <ons-col width="50px">

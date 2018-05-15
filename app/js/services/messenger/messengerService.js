@@ -74,17 +74,26 @@
 				convId: convId,
 				members: members
             };
-			return refConversations.update(newConversation)
+            return refConversations.update(newConversation)
 				.then(()=>{
-					const userConv = {};
-					userConv[convId] = true;
+					const conv_user_ref = {};
+                    conv_user_ref[convId] = true;
 					return refUsers.child(user.userId+"/conversations")
-						.update(userConv).then(()=>{
-                        return newConversation[convId];
+						.update(conv_user_ref).then(()=>{
+						if(user.userId !== user_conv.userId)
+						{
+                            return refUsers.child(user_conv.userId+"/conversations")
+                                .update(conv_user_ref).then(()=>{
+                                    return newConversation[convId];
+                                });
+						}else{
+                            return newConversation[convId];
+						}
 					});
-				});
+                });
         }
-	    /**
+
+        /**
 	     * @ngdoc method
 	     * @name messaging-app.service:MessengerService#getConversations
 	     * @methodOf messaging-app.service:MessengerService
@@ -123,24 +132,28 @@
 	    function getConversationById(convId)
 	    {
 	    	let defer = $q.defer();
-		   refConversations.child(convId).once("value",(snap)=>{
-				let conversation = snap.val();
-				let members = conversation.members;
-				let membersPromises = [];
-				Object.keys(members).forEach((userId)=>{
-	                membersPromises.push(UserService.getUserById(userId));
-				});
-				return $q.all(membersPromises).then((users)=>{
-	                let otherUser = {};
-					users.forEach((mem)=>{
-	                    members[mem.userId] = mem;
-						if(mem.userId !== user.userId ) otherUser = mem;
-					});
-					if(membersPromises.length === 1) conversation.user = user;
-					else conversation.user = otherUser;
-	                conversation.members = members;
-					defer.resolve(conversation);
-				});
+		   refConversations.child(convId).once("value",(snap)=> {
+               if (snap.exists()) {
+                   let conversation = snap.val();
+                   let members = conversation.members;
+                   let membersPromises = [];
+                   Object.keys(members).forEach((userId) => {
+                       membersPromises.push(UserService.getUserById(userId));
+                   });
+                   return $q.all(membersPromises).then((users) => {
+                       let otherUser = {};
+                       users.forEach((mem) => {
+                           members[mem.userId] = mem;
+                           if (mem.userId !== user.userId) otherUser = mem;
+                       });
+                       if (membersPromises.length === 1) conversation.user = user;
+                       else conversation.user = otherUser;
+                       conversation.members = members;
+                       defer.resolve(conversation);
+                   });
+               }else{
+               		defer.resolve(null);
+			   }
            }).catch((err)=>defer.reject(err));
 		   return defer.promise;
 	    }

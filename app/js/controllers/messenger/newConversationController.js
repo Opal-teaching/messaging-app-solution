@@ -72,7 +72,7 @@
 			refUsers.once("value",(snap)=>{
 				$timeout(()=>{
 					vm.loading = false;
-					if(snap.exists()) vm.users = snap.val();
+					if(snap.exists()) vm.users = Object.values(snap.val());
 				});
 			});
 			refUsers.on("child_changed",(snap)=>{
@@ -81,7 +81,7 @@
 					if(snap.exists())
 					{
 						let user = snap.val();
-						vm.users[user.userId] = user;
+						vm.users.push(user);
 					}
 				});
 			});
@@ -95,23 +95,26 @@
 		 * 						MessengerService.addConversation}, it then pushes the
 		 *
 		 */
-		function goToConversation(user_convId, user_conv){
+		function goToConversation(user_conv){
 			// Check whether conversation exists, if it does. pop this page
-			let convId = (user_conv.userId < user.userId)? user_convId+user.userId: user.userId + user_convId;
-			refConversations.child(convId).once("value",function(snap){
-					if(snap.exists())
+			let convId = (user_conv.userId < user.userId)? user_conv.userId+user.userId: user.userId + user_conv.userId;
+			console.log(convId);
+			MessengerService.getConversationById(convId)
+				.then((conv)=>{
+					console.log(conv);
+					if(conv)
 					{
-						navi.replacePage("./views/messages/individual-conversation.html",
-							{param: snap.val(), animation:"lift"});
+                        navi.replacePage("./views/messages/individual-conversation.html",
+                            {conversation:conv, user_conv: user_conv, convId: convId,  animation:"lift"});
 					}else{
-						MessengerService.addConversation(user, user_conv, convId).then((conv)=>{
-                            navi.replacePage("./views/messages/individual-conversation.html",
-								{param: conv, animation:"lift"});
-						}).catch(()=>{
-							ons.notification.alert({message:"Problem adding conversation"});
-						});
+						console.log("What");
+                        navi.replacePage("./views/messages/individual-conversation.html",
+                            {conversation: null,user_conv: user_conv, convId: convId, animation:"lift"});
 					}
-            	});
+				}).catch((err)=>{
+						console.log(err);
+						ons.notification.alert({message:"Problem creating conversation"});
+			});
 		}
 		/**
 		 * @ngdoc method

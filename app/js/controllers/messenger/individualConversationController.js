@@ -17,7 +17,7 @@
 	     * @propertyOf messaging-app.controller:IndividualConversationController
 	     * @description Contains the current conversation in the page.
 	     */
-	    vm.conversation = {};
+	    vm.conversation = null;
 	    /**
 	     * @ngdoc property
 	     * @name messaging-app.controller:IndividualConversationController#noMessages
@@ -39,12 +39,21 @@
          * @description Contains the new message contents
          */
         vm.messages = [];
+        /**
+         * @ngdoc property
+         * @name messaging-app.controller:IndividualConversationController#user_conv
+         * @propertyOf messaging-app.controller:IndividualConversationController
+         * @description The other use involved in the conversation
+         */
+        vm.user_conv = {};
+		// Controller API functions
         vm.sendMessage = sendMessage;
         vm.deleteConversation = deleteConversation;
 
         // Local variables
 		let refFirebase = firebase.database().ref();
 		let user = UserService.getUser();
+		let convId = "";
         initController();
         //////////////////////////
 	    /**
@@ -57,19 +66,25 @@
 	     */
         function initController() {
             let naviParam = navi.getCurrentPage().options;
+
             if(naviParam)
 			{
-				vm.conversation = naviParam.param;
-                refFirebase.child("messages"+"/"+vm.conversation.convId)
-					.on("child_added",function(snap){
-						$timeout(()=>{
-                            if (snap.val()) vm.messages.push(snap.val());
-                        });
-                });
+				console.log(naviParam);
+                if(naviParam.conversation)
+				{
+                    vm.conversation = naviParam.conversation;
+                    convId = vm.conversation.convId;
+                    vm.user_conv = vm.conversation.user;
+                    addMessagesListener();
+				}else{
+                    vm.user_conv = naviParam.user_conv;
+                    convId = naviParam.convId;
+				}
             }else{
-            	ons.notification.alert({message:"Problem occurred fetching conversation"});
-            	navi.resetToPage("./views/messages/conversations.html");
-			}
+
+                ons.notification.alert({message:"Problem occurred fetching conversation"});
+                navi.resetToPage("./views/messages/conversations.html");
+            }
         }
 	    /**
 	     * @ngdoc method
@@ -78,15 +93,37 @@
 	     * @description Calls the MessengerService to add a message, if error,
 	     *              displays Onsen alert.
 	     */
-        function sendMessage() {
-        	console.log(vm.conversation, user);
-        	MessengerService.sendMessage(vm.conversation.convId, user,
-					vm.messageContent).catch((err)=>{
-					ons.notification.alert({message:"Problem connecting with server"});
-			});
+        function sendMessage(messageContent) {
+        	if ( vm.conversation )
+			{
+                MessengerService.sendMessage(vm.conversation.convId, user,
+                    messageContent).catch((err)=>{
+                    ons.notification.alert({message:"Problem sending message"});
+                });
+            }else{
+                MessengerService.addConversation(user, vm.user_conv, convId)
+					.then((conv)=>{
+                	vm.conversation = conv;
+                    return MessengerService.sendMessage(conv.convId, user, messageContent);
+                }).then((enf)=>{
+                    addMessagesListener();
+                }).catch((err)=>{
+                	console.log(err);
+                	ons.notification.alert({message:"Problem adding conversation"});
+                });
+            }
+
             vm.messageContent = "";
             vm.noMessages = false;
         }
+        function addMessagesListener() {
+            refFirebase.child("messages"+"/"+convId)
+                .on("child_added",function(snap){
+                    $timeout(()=>{
+                        if (snap.val()) vm.messages.push(snap.val());
+                    });
+                });
+		}
 	    /**
 	     * @ngdoc method
 	     * @name messaging-app.controller:IndividualConversationController#deleteConversation

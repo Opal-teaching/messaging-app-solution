@@ -16,7 +16,7 @@
     </ons-toolbar>
     <ons-list>
         <ons-list-item style="margin-top:10px">
-            <input type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchConversationString">
+            <textarea type="search" value="" placeholder="Search" class="search-input" ng-model="vm.searchConversationString"></textarea>
         </ons-list-item>
     </ons-list>
     <div class="center" style="text-align: center" ng-show="vm.conversations.length === 0">
@@ -34,11 +34,11 @@
                 </ons-col>
 
                 <ons-col>
-                    <div class="timeline-date">{{conversation.lastMessage.messageDate|date: 'MMM d, y h:mm a'}}</div>
+                    <div class="timeline-date" style="padding:5px">{{conversation.lastMessage.messageDate|dateFormat: 'MMM d, y h:mm a'}}</div>
                     <div class="timeline-from">
-                        <span class="timeline-name">{{conversation.user.firstname}} {{conversation.user.lastname}}</span>
+                        <span class="timeline-name">{{conversation.user.firstname}} {{conversation.user.lastname}}&nbsp;</span>
                         <span ng-show="conversation.user.online"class="timeline-name" style="margin-right:5px;margin-top: -2px;position:absolute">
-                            <ons-icon icon="ion-record" style="color: forestgreen;font-size: 10px" "></ons-icon>
+                            <ons-icon icon="ion-record" style="color: forestgreen;font-size: 10px"></ons-icon>
                         </span>
                     </div>
 

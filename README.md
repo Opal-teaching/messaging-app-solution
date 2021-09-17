@@ -1,3 +1,5 @@
+# *** MOVED TO GITLAB ***
+
 # Solution to messaging-app assignment
 
 Assignment repo: [messaging-app](https://github.com/Opal-teaching/messaging-app)
